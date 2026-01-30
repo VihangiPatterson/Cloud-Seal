@@ -1,0 +1,30 @@
+services:
+  ipfs:
+    image: ipfs/kubo:release
+    container_name: cloudseal-ipfs
+    ports:
+      - "5001:5001"
+      - "8080:8080"
+    volumes:
+      - ipfs_data:/data/ipfs
+    environment:
+      IPFS_PROFILE: server
+    command: daemon --migrate=true
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cloudseal-backend
+    ports:
+      - "8001:8001"
+    depends_on:
+      - ipfs
+    environment:
+      IPFS_HOST: ipfs
+      IPFS_PORT: 5001
+    command: uvicorn app:app --host 0.0.0.0 --port 8001
+
+volumes:
+  ipfs_data:

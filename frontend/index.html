@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cloud Seal Enhanced – Secure Deduplication</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header>
+    <h1>🔐 Cloud Seal <span style="font-weight: 300;">Enhanced</span></h1>
+    <p>Privacy-Preserving Multi-Tenant deduplication using <b>AI + Blockchain + PQC</b></p>
+  </header>
+
+  <main>
+    <!-- System Status Dashboard -->
+    <section class="card">
+      <h2>📊 Live System Status <span class="badge badge-live">Live</span></h2>
+      <div class="status-grid">
+        <div class="status-item">
+          <span class="status-label">📦 Blocks</span>
+          <span id="blockCount" class="status-value">-</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">📂 Total Files</span>
+          <span id="totalFiles" class="status-value">-</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">💎 Unique Files</span>
+          <span id="uniqueFiles" class="status-value">-</span>
+        </div>
+        <div class="status-item" style="border-bottom: 2px solid var(--primary);">
+          <span class="status-label">♻️ Dedup Ratio</span>
+          <span id="dedupRatio" class="status-value">-</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">🧠 AI Model</span>
+          <span id="aiStatus" class="status-value">-</span>
+        </div>
+        <div class="status-item">
+          <span class="status-label">🛡️ PQC Algorithm</span>
+          <span id="pqcAlgo" class="status-value">-</span>
+        </div>
+      </div>
+      <button onclick="loadSystemStatus()" class="btn-secondary">🔄 Refresh Dashboard</button>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="card">
+      <h2>📤 Secure Upload</h2>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <label>Current Tenant</label>
+          <select id="tenantId" onchange="onTenantChange()">
+            <option value="Tenant A">Tenant A (Commercial)</option>
+            <option value="Tenant B">Tenant B (Enterprise)</option>
+            <option value="Tenant C">Tenant C (Public)</option>
+          </select>
+        </div>
+        <div>
+          <label>Select File</label>
+          <input type="file" id="fileInput" />
+        </div>
+      </div>
+
+      <div class="options-group">
+        <h3>Advanced Security</h3>
+        <label class="checkbox-label">
+          <input type="checkbox" id="usePQC" checked />
+          <span>🔒 Post-Quantum Encryption (NIST Level 3 - Kyber 768)</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="useAI" checked />
+          <span>🤖 CNN-Driven Duplicate Search (Similarity Detection)</span>
+        </label>
+      </div>
+
+      <button onclick="upload()" class="btn-primary">🚀 Start Secure Upload</button>
+      <div id="uploadResult" class="result-box"></div>
+    </section>
+
+    <!-- Sharing Section -->
+    <section class="card">
+      <h2>🔗 Quantum-Safe Sharing</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div>
+          <label>File CID</label>
+          <input id="shareCID" placeholder="Enter CID string" />
+        </div>
+        <div>
+          <label>Receiver Tenant</label>
+          <select id="receiverID">
+            <option value="Tenant A">Tenant A</option>
+            <option value="Tenant B">Tenant B</option>
+            <option value="Tenant C">Tenant C</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="shareFile()" class="btn-secondary">🤝 Create PQ Link</button>
+      <div id="shareResult" class="result-box"></div>
+    </section>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto;">
+      <!-- My Files -->
+      <section class="card" style="margin: 0; max-width: none;">
+        <h2>📁 Personal Vault</h2>
+        <div id="myFiles" class="file-list"></div>
+        <button onclick="loadMyFiles()" class="btn-secondary" style="width: 100%;">Refresh My Vault</button>
+      </section>
+
+      <!-- All Files -->
+      <section class="card" style="margin: 0; max-width: none;">
+        <h2>🗂️ Global Reference</h2>
+        <pre id="files" class="code-block"></pre>
+        <button onclick="loadFiles()" class="btn-secondary" style="width: 100%;">View All Hashes</button>
+      </section>
+    </div>
+
+    <!-- Audit Section -->
+    <section class="card">
+      <h2>🔍 Blockchain Ledger</h2>
+      <label class="checkbox-label" style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px;">
+        <input type="checkbox" id="filterMyAudit" onchange="loadAudit()" />
+        <span>View entries for current tenant only</span>
+      </label>
+      <pre id="audit" class="code-block"></pre>
+      <button onclick="loadAudit()" class="btn-secondary">📜 Pull Latest Logs</button>
+    </section>
+
+    <!-- Advanced Analysis -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; max-width: 1000px; margin: 0 auto;">
+      <section class="card" style="margin: 0;">
+        <h2>⛓️ Blockchain</h2>
+        <button onclick="loadBlockchainStats()" class="btn-secondary" style="width: 100%;">Metrics</button>
+        <pre id="blockchainStats" class="code-block" style="font-size: 0.75rem;"></pre>
+      </section>
+      <section class="card" style="margin: 0;">
+        <h2>🧠 AI Siamese Network</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+          Train the CNN model to detect bit-level similarities beyond cryptographic hashes.
+        </p>
+
+        <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+          <label style="margin-bottom: 5px;">Training Target (Epochs)</label>
+          <input type="number" id="trainEpochs" value="20" min="5" max="100" style="margin-bottom: 0;" />
+        </div>
+
+        <button onclick="trainAI()" class="btn-primary" style="width: 100%;">🚀 Start Model Training</button>
+        <div id="trainResult" class="result-box"
+          style="margin-top: 15px; padding: 12px; font-size: 0.8rem; border-left-color: var(--accent);"></div>
+      </section>
+      <section class="card" style="margin: 0;">
+        <h2>🛡️ PQC Info</h2>
+        <button onclick="loadPQCInfo()" class="btn-secondary" style="width: 100%;">Details</button>
+        <pre id="pqcInfo" class="code-block" style="font-size: 0.75rem;"></pre>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <p>Cloud Seal Enhanced – Distributed Security Platform</p>
+    <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.6;">Built for Security, Scalability, and Sovereignty</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
