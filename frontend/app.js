@@ -1,6 +1,6 @@
 // Enhanced Cloud Seal Frontend JavaScript
 
-const API = "http://127.0.0.1:8000"; // Changed to port 8000 (enhanced backend)
+const API = ""; // Empty string for relative paths (Hosting readiness)
 
 // ===== System Status =====
 async function loadSystemStatus() {

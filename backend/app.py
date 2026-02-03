@@ -3,10 +3,12 @@ Cloud Seal PoC - FastAPI Backend
 """
 from fastapi import FastAPI, UploadFile, File, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from typing import Optional
 import asyncio
 
-from config import DATA_DIR, BLOCKCHAIN_FILE, REFCOUNT_FILE
+from config import BASE_DIR, DATA_DIR, BLOCKCHAIN_FILE, REFCOUNT_FILE
 
 from encryption import (
     generate_content_hash,
@@ -86,11 +88,18 @@ async def upload_file(
             if existing_content:
                 is_similar, similarity = ai_engine.check_similarity(raw, existing_content)
                 if is_similar:
-                    ai_check_result = {"ai_detected": True, "similarity_score": similarity, "matched_cid": existing_cid}
-                    content_hash = existing_cid
+                    ai_check_result = {
+                        "ai_detected": True, 
+                        "similarity_score": similarity, 
+                        "matched_cid": existing_cid,
+                        "match_type": "SOFT" if existing_cid != content_hash else "HARD"
+                    }
+                    # In this enhanced version, we ONLY perform hard deduplication if the hashes match.
+                    # AI is used for "Similarity Suggestions" and "Near-Duplicate" flagging.
+                    # If we wanted "Fuzzy Deduplication", we would set content_hash = existing_cid here.
                     break
 
-    # Bloom filter check
+    # Bloom filter check (Standard Hard Deduplication)
     maybe_duplicate = bloom.check(content_hash)
 
     # Reference counter
@@ -126,7 +135,8 @@ async def upload_file(
             "file_name": file.filename,
             "file_cid": content_hash,
             "encryption": encryption_method,
-            "ai_enhanced": use_ai
+            "ai_enhanced": use_ai,
+            "ai_similarity": ai_check_result["similarity_score"] if ai_check_result else None
         })
         blockchain.mine_pending_transactions()
 
@@ -138,13 +148,14 @@ async def upload_file(
             "ai_details": ai_check_result
         }
 
-    # Duplicate upload
+    # Duplicate upload (Exact Match)
     blockchain.add_transaction({
         "action": "UPLOAD_DUPLICATE",
         "tenant_id": x_tenant_id,
         "file_name": file.filename,
         "file_cid": content_hash,
-        "ai_match": ai_check_result is not None
+        "ai_match": ai_check_result is not None,
+        "match_type": "HARD"
     })
     blockchain.mine_pending_transactions()
 
@@ -286,3 +297,10 @@ async def share_file(
     blockchain.mine_pending_transactions()
     
     return {"status": "shared", "shared_with": x_receiver_id}
+
+@app.get("/")
+async def read_index():
+    return FileResponse(BASE_DIR.parent / "frontend" / "index.html")
+
+# Mount static files (CSS, JS, Assets)
+app.mount("/frontend", StaticFiles(directory=BASE_DIR.parent / "frontend"), name="frontend")
