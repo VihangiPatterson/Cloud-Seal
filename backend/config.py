@@ -17,7 +17,20 @@ BLOOM_FILTER_FP_RATE = 0.01  # 1% false positive rate
 
 # Storage Configuration
 DATA_DIR = BASE_DIR / 'data'
-DATA_DIR.mkdir(exist_ok=True)
+
+# Cloud-Safe Writable Directory Fallback
+# Many cloud platforms (like Choreo) have a read-only root filesystem.
+try:
+    DATA_DIR.mkdir(exist_ok=True)
+    # Test if we can actually write to this directory
+    test_file = DATA_DIR / '.write_test'
+    test_file.touch()
+    test_file.unlink()
+except (OSError, PermissionError):
+    # Use /tmp as it is always writable in Choreo/Serverless environments
+    DATA_DIR = Path('/tmp/cloud-seal-data')
+    DATA_DIR.mkdir(exist_ok=True, parents=True)
+    print(f"[Config] ☁️ Read-only detected. Switching storage to: {DATA_DIR}")
 
 # Blockchain Configuration
 BLOCKCHAIN_FILE = DATA_DIR / 'blockchain.json'
