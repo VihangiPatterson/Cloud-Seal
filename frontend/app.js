@@ -5,7 +5,7 @@ const API = ""; // Empty string for relative paths (Hosting readiness)
 // ===== System Status =====
 async function loadSystemStatus() {
   try {
-    const res = await fetch(`${API}/system/status`);
+    const res = await fetch(`${API}system/status`);
     const data = await res.json();
 
     // Update dashboard
@@ -47,7 +47,7 @@ async function upload() {
     if (usePQC) queryParams.append("use_pqc", "true");
     if (useAI) queryParams.append("use_ai", "true");
 
-    const url = `${API}/upload?${queryParams.toString()}`;
+    const url = `${API}upload?${queryParams.toString()}`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -111,7 +111,7 @@ async function shareFile() {
   resultBox.className = "result-box loading";
 
   try {
-    const res = await fetch(`${API}/share?file_cid=${cid}`, {
+    const res = await fetch(`${API}share?file_cid=${cid}`, {
       method: "POST",
       headers: {
         "X-Sender-ID": sender,
@@ -149,7 +149,7 @@ async function loadMyFiles() {
   }
 
   try {
-    const res = await fetch(`${API}/files/${tenant}`);
+    const res = await fetch(`${API}files/${tenant}`);
     const data = await res.json();
 
     const container = document.getElementById("myFiles");
@@ -194,7 +194,7 @@ async function deleteFile(cid) {
   }
 
   try {
-    const res = await fetch(`${API}/delete/${cid}`, {
+    const res = await fetch(`${API}delete/${cid}`, {
       method: "POST",
       headers: {
         "X-Tenant-ID": tenant
@@ -221,7 +221,7 @@ async function deleteFile(cid) {
 // ===== All Files =====
 async function loadFiles() {
   try {
-    const res = await fetch(`${API}/files`);
+    const res = await fetch(`${API}files`);
     const data = await res.json();
     document.getElementById("files").textContent =
       JSON.stringify(data, null, 2);
@@ -236,7 +236,7 @@ async function loadAudit() {
   const tenant = document.getElementById("tenantId").value;
 
   try {
-    let url = `${API}/audit`;
+    let url = `${API}audit`;
     if (filterMy && tenant) {
       url += `?tenant_id=${tenant}`;
     }
@@ -255,7 +255,7 @@ async function loadAudit() {
 // ===== Blockchain Stats =====
 async function loadBlockchainStats() {
   try {
-    const res = await fetch(`${API}/blockchain/stats`);
+    const res = await fetch(`${API}blockchain/stats`);
     const data = await res.json();
 
     document.getElementById("blockchainStats").textContent =
@@ -275,7 +275,7 @@ async function trainAI() {
   resultBox.className = "result-box loading";
 
   try {
-    const res = await fetch(`${API}/ai/train?epochs=${epochs}`, {
+    const res = await fetch(`${API}ai/train?epochs=${epochs}`, {
       method: "POST"
     });
 
@@ -301,7 +301,7 @@ async function trainAI() {
 // ===== PQC Info =====
 async function loadPQCInfo() {
   try {
-    const res = await fetch(`${API}/pqc/info`);
+    const res = await fetch(`${API}pqc/info`);
     const data = await res.json();
 
     document.getElementById("pqcInfo").textContent =
