@@ -18,8 +18,9 @@ def reset_poc():
         data_dir / "metadata.json",
         data_dir / "bloom_filter.pkl",
         data_dir / "ai_model.pkl",
-        data_dir / "reference_counts.json",
-        data_dir / "audit_log.json"
+        data_dir / "refcounts.json",
+        data_dir / "audit_log.json",
+        data_dir / "ipfs" / "pins.json"
     ]
     
     dirs_to_wipe = [
