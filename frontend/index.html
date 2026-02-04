@@ -42,10 +42,6 @@
           <span class="status-label">♻️ Dedup Ratio</span>
           <span id="dedupRatio" class="status-value">-</span>
         </div>
-        <div class="status-item">
-          <span class="status-label">🛡️ PQC Algorithm</span>
-          <span id="pqcAlgo" class="status-value">-</span>
-        </div>
       </div>
       <button onclick="loadSystemStatus(true)" class="btn-secondary">🔄 Refresh Dashboard</button>
     </section>
@@ -53,6 +49,9 @@
     <!-- Upload Section -->
     <section class="card">
       <h2>📤 Secure Upload</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+        Upload files securely with quantum-resistant encryption and AI-powered duplicate detection.
+      </p>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
         <div>
@@ -70,14 +69,24 @@
       </div>
 
       <div class="options-group">
-        <h3>Advanced Security</h3>
-        <label class="checkbox-label">
+        <h3>Advanced Security Options</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+          Enable cutting-edge security features for maximum protection and efficiency.
+        </p>
+        <label class="checkbox-label"
+          title="Uses Kyber-768 (NIST Level 3) to protect against future quantum computer attacks">
           <input type="checkbox" id="usePQC" checked />
-          <span>🔒 Post-Quantum Encryption (NIST Level 3 - Kyber 768)</span>
+          <span>🔒 Post-Quantum Encryption</span>
+          <small style="display: block; color: var(--text-muted); margin-left: 28px; margin-top: 4px;">
+            Protects your files against future quantum computer attacks using NIST-approved Kyber-768 algorithm
+          </small>
         </label>
-        <label class="checkbox-label">
+        <label class="checkbox-label" title="Uses AI to detect similar files even if they're slightly different">
           <input type="checkbox" id="useAI" checked />
-          <span>🤖 CNN-Driven Duplicate Search (Similarity Detection)</span>
+          <span>🤖 AI-Powered Similarity Detection</span>
+          <small style="display: block; color: var(--text-muted); margin-left: 28px; margin-top: 4px;">
+            Finds near-duplicate files (90%+ similar) using Convolutional Neural Networks, saving additional storage
+          </small>
         </label>
       </div>
 
