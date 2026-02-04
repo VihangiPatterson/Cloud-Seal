@@ -4,6 +4,11 @@ const API = ""; // Empty string for relative paths (Hosting readiness)
 
 // ===== System Status =====
 async function loadSystemStatus() {
+  const btn = document.querySelector('button[onclick="loadSystemStatus()"]');
+  const originalText = btn ? btn.textContent : "🔄 Refresh Dashboard";
+
+  if (btn) btn.textContent = "⏳ Refreshing...";
+
   try {
     const res = await fetch(`${API}./system/status`);
     const data = await res.json();
@@ -20,6 +25,8 @@ async function loadSystemStatus() {
 
   } catch (err) {
     console.error("Failed to load system status:", err);
+  } finally {
+    if (btn) btn.textContent = originalText;
   }
 }
 
