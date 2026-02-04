@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cloud Seal Enhanced – Secure Deduplication</title>
   <link rel="stylesheet" href="frontend/style.css" />
+  <script>
+    // Enforce Trailing Slash (Critical for Choreo relative paths)
+    if (window.location.pathname.includes('/v1.0') && !window.location.pathname.endsWith('/')) {
+      window.location.href = window.location.href + '/';
+    }
+  </script>
 </head>
 
 <body>
@@ -45,7 +51,7 @@
           <span id="pqcAlgo" class="status-value">-</span>
         </div>
       </div>
-      <button onclick="loadSystemStatus()" class="btn-secondary">🔄 Refresh Dashboard</button>
+      <button onclick="loadSystemStatus(true)" class="btn-secondary">🔄 Refresh Dashboard</button>
     </section>
 
     <!-- Upload Section -->

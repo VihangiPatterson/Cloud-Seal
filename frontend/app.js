@@ -3,11 +3,11 @@
 const API = ""; // Empty string for relative paths (Hosting readiness)
 
 // ===== System Status =====
-async function loadSystemStatus() {
-  const btn = document.querySelector('button[onclick="loadSystemStatus()"]');
-  const originalText = btn ? btn.textContent : "🔄 Refresh Dashboard";
+async function loadSystemStatus(isManual = false) {
+  const btn = document.querySelector('button[onclick="loadSystemStatus(true)"]');
+  const originalText = "🔄 Refresh Dashboard";
 
-  if (btn) btn.textContent = "⏳ Refreshing...";
+  if (isManual && btn) btn.textContent = "⏳ Refreshing...";
 
   try {
     const res = await fetch(`${API}./system/status?t=${Date.now()}`, {
@@ -29,7 +29,7 @@ async function loadSystemStatus() {
   } catch (err) {
     console.error("Failed to load system status:", err);
   } finally {
-    if (btn) btn.textContent = originalText;
+    if (isManual && btn) btn.textContent = originalText;
   }
 }
 
@@ -96,7 +96,7 @@ async function upload() {
     // Refresh file lists and status
     await loadFiles();
     await loadMyFiles();
-    await loadSystemStatus();
+    await loadSystemStatus(false);
 
   } catch (err) {
     const resultBox = document.getElementById("uploadResult");
@@ -221,7 +221,7 @@ async function deleteFile(cid) {
 
     await loadFiles();
     await loadMyFiles();
-    await loadSystemStatus();
+    await loadSystemStatus(false);
 
   } catch (err) {
     alert(`❌ Error: ${err.message}`);
@@ -299,7 +299,7 @@ async function trainAI() {
     resultBox.textContent = resultText;
     resultBox.className = "result-box success";
 
-    await loadSystemStatus();
+    await loadSystemStatus(false);
 
   } catch (err) {
     const resultBox = document.getElementById("trainResult");
@@ -326,7 +326,7 @@ async function loadPQCInfo() {
 function onTenantChange() {
   loadMyFiles();
   loadAudit();
-  loadSystemStatus();
+  loadSystemStatus(false);
   loadFiles();
   // Refresh advanced details if they were open/visible
   if (document.getElementById("blockchainStats").textContent !== "") loadBlockchainStats();
@@ -335,11 +335,11 @@ function onTenantChange() {
 
 // ===== Auto-load on page load =====
 window.addEventListener("DOMContentLoaded", () => {
-  loadSystemStatus();
+  loadSystemStatus(false);
   loadFiles();
 });
 
 // ===== Auto-refresh status every 10 seconds =====
 setInterval(() => {
-  loadSystemStatus();
+  loadSystemStatus(false);
 }, 10000);
