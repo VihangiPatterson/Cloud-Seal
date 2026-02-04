@@ -22,8 +22,6 @@ async function loadSystemStatus(isManual = false) {
     document.getElementById("uniqueFiles").textContent = data.storage.unique_files;
     document.getElementById("dedupRatio").textContent =
       (data.storage.deduplication_ratio * 100).toFixed(1) + "%";
-    document.getElementById("aiStatus").textContent =
-      data.ai.trained ? "✅ Trained" : "❌ Untrained";
     document.getElementById("pqcAlgo").textContent = data.pqc.algorithm;
 
   } catch (err) {
