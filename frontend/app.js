@@ -10,7 +10,10 @@ async function loadSystemStatus() {
   if (btn) btn.textContent = "⏳ Refreshing...";
 
   try {
-    const res = await fetch(`${API}./system/status`);
+    const res = await fetch(`${API}./system/status?t=${Date.now()}`, {
+      cache: 'no-cache',
+      headers: { 'Cache-Control': 'no-cache' }
+    });
     const data = await res.json();
 
     // Update dashboard
