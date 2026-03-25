@@ -79,6 +79,12 @@ class BinaryFileEncoder:
             padding = np.zeros(self.vector_size - len(feature_vector))
             feature_vector = np.concatenate([feature_vector, padding])
         
+        # Z-score normalize for balanced gradient flow
+        mean = np.mean(feature_vector)
+        std = np.std(feature_vector)
+        if std > 1e-8:
+            feature_vector = (feature_vector - mean) / std
+        
         return feature_vector.astype(np.float32)
     
     def _calculate_entropy(self, data: bytes) -> float:
@@ -110,104 +116,197 @@ class BinaryFileEncoder:
 
 class SimpleCNN:
     """
-    Lightweight CNN for binary similarity detection
-    Uses cosine similarity on learned embeddings
+    Lightweight Siamese CNN for binary similarity detection
+    Uses two-layer projection with contrastive learning
+    Trained on pairs of feature vectors to learn similarity
     """
     
-    def __init__(self, input_size: int = 2048, embedding_size: int = 128):
+    def __init__(self, input_size: int = 2048, hidden_size: int = 512, embedding_size: int = 128):
         self.input_size = input_size
+        self.hidden_size = hidden_size
         self.embedding_size = embedding_size
         
-        # Simple projection layer (W * x + b)
-        self.W = np.random.randn(embedding_size, input_size).astype(np.float32) * 0.01
-        self.b = np.zeros(embedding_size, dtype=np.float32)
+        # Xavier initialization for stable gradients
+        # Layer 1: input → hidden
+        scale1 = np.sqrt(2.0 / (input_size + hidden_size))
+        self.W1 = np.random.randn(hidden_size, input_size).astype(np.float32) * scale1
+        self.b1 = np.zeros(hidden_size, dtype=np.float32)
+        
+        # Layer 2: hidden → embedding
+        scale2 = np.sqrt(2.0 / (hidden_size + embedding_size))
+        self.W2 = np.random.randn(embedding_size, hidden_size).astype(np.float32) * scale2
+        self.b2 = np.zeros(embedding_size, dtype=np.float32)
         
         # Trained flag
         self.is_trained = False
     
     def forward(self, x: np.ndarray) -> np.ndarray:
         """
-        Forward pass: project to embedding space
-        Uses ReLU activation
+        Forward pass: two-layer projection to embedding space
+        Returns both the embedding and intermediate values for backprop
         """
-        # Linear projection
-        z = np.dot(self.W, x) + self.b
+        # Layer 1: linear + ReLU
+        z1 = np.dot(self.W1, x) + self.b1
+        h1 = np.maximum(0, z1)  # ReLU
         
-        # ReLU activation
-        embedding = np.maximum(0, z)
+        # Layer 2: linear (no activation before normalization)
+        z2 = np.dot(self.W2, h1) + self.b2
         
-        # L2 normalization for cosine similarity
-        norm = np.linalg.norm(embedding)
-        if norm > 0:
-            embedding = embedding / norm
+        # L2 normalization
+        norm = np.linalg.norm(z2)
+        if norm > 1e-8:
+            embedding = z2 / norm
+        else:
+            embedding = z2
         
         return embedding
     
-    def train(self, X_train: List[np.ndarray], y_train: List[int], epochs: int = 10):
-        """
-        Simple contrastive learning
-        Brings similar files closer, pushes dissimilar files apart
-        """
-        print(f"Training CNN on {len(X_train)} samples for {epochs} epochs...")
+    def _forward_with_cache(self, x: np.ndarray):
+        """Forward pass that also returns intermediate values for gradient computation"""
+        # Layer 1
+        z1 = np.dot(self.W1, x) + self.b1
+        h1 = np.maximum(0, z1)  # ReLU
+        relu_mask = (z1 > 0).astype(np.float32)  # Which neurons fired
         
-        learning_rate = 0.01
+        # Layer 2
+        z2 = np.dot(self.W2, h1) + self.b2
+        
+        # L2 normalization
+        norm = np.linalg.norm(z2)
+        if norm > 1e-8:
+            embedding = z2 / norm
+        else:
+            embedding = z2
+            norm = 1.0
+        
+        return embedding, h1, relu_mask, z2, norm
+    
+    def train_on_pairs(
+        self,
+        pairs: List[Tuple[np.ndarray, np.ndarray, bool]],
+        epochs: int = 10,
+        learning_rate: float = 0.005,
+        margin: float = 0.3
+    ):
+        """
+        Contrastive learning on pairs with proper gradient backpropagation.
+        
+        For similar pairs: minimize (1 - cosine_similarity)
+        For dissimilar pairs: minimize max(0, cosine_similarity - margin)
+        
+        Gradients are backpropagated through:
+          L2 normalization → Layer 2 (linear) → ReLU → Layer 1 (linear)
+        """
+        print(f"Training CNN on {len(pairs)} pairs for {epochs} epochs...")
+        print(f"  Learning rate: {learning_rate}, Margin: {margin}")
         
         for epoch in range(epochs):
-            total_loss = 0
+            total_loss = 0.0
+            num_updates = 0
             
-            # Mini-batch training
-            for i in range(len(X_train) - 1):
-                x1 = X_train[i]
-                y1 = y_train[i]
+            # Shuffle pairs each epoch
+            indices = np.random.permutation(len(pairs))
+            
+            for idx in indices:
+                vec1, vec2, is_similar = pairs[idx]
                 
-                # Find pair
-                for j in range(i + 1, len(X_train)):
-                    x2 = X_train[j]
-                    y2 = y_train[j]
-                    
-                    # Forward pass
-                    emb1 = self.forward(x1)
-                    emb2 = self.forward(x2)
-                    
-                    # Cosine similarity
-                    similarity = np.dot(emb1, emb2)
-                    
-                    # Contrastive loss
-                    if y1 == y2:
-                        # Same class: minimize distance
-                        loss = 1 - similarity
+                # Forward pass with cached intermediate values
+                emb1, h1_1, mask1, z2_1, norm1 = self._forward_with_cache(vec1)
+                emb2, h1_2, mask2, z2_2, norm2 = self._forward_with_cache(vec2)
+                
+                # Cosine similarity (embeddings are already L2-normalized)
+                cos_sim = np.dot(emb1, emb2)
+                cos_sim = np.clip(cos_sim, -1.0, 1.0)
+                
+                # Contrastive loss and gradient of loss w.r.t. cos_sim
+                if is_similar:
+                    loss = (1.0 - cos_sim) ** 2
+                    d_cos = -2.0 * (1.0 - cos_sim)  # d(loss)/d(cos_sim)
+                else:
+                    if cos_sim > margin:
+                        loss = (cos_sim - margin) ** 2
+                        d_cos = 2.0 * (cos_sim - margin)
                     else:
-                        # Different class: maximize distance
-                        loss = max(0, similarity - 0.2)  # margin = 0.2
-                    
-                    total_loss += loss
-                    
-                    # Simple gradient update (approximation)
-                    if loss > 0:
-                        grad = (emb2 - emb1) if y1 == y2 else (emb1 - emb2)
-                        self.W += learning_rate * np.outer(grad, x1)
+                        loss = 0.0
+                        d_cos = 0.0
+                
+                total_loss += loss
+                
+                if abs(d_cos) < 1e-10:
+                    continue
+                
+                num_updates += 1
+                
+                # Gradient of cos_sim w.r.t. z2 (pre-normalization)
+                # cos_sim = (z2_1/||z2_1||) · (z2_2/||z2_2||)
+                # d(cos_sim)/d(z2_1) = (emb2 - cos_sim * emb1) / norm1
+                d_z2_1 = d_cos * (emb2 - cos_sim * emb1) / max(norm1, 1e-8)
+                d_z2_2 = d_cos * (emb1 - cos_sim * emb2) / max(norm2, 1e-8)
+                
+                # Clip gradients to prevent explosion
+                grad_clip = 1.0
+                d_z2_1 = np.clip(d_z2_1, -grad_clip, grad_clip)
+                d_z2_2 = np.clip(d_z2_2, -grad_clip, grad_clip)
+                
+                # Backprop through Layer 2: z2 = W2 @ h1 + b2
+                dW2_1 = np.outer(d_z2_1, h1_1)
+                dW2_2 = np.outer(d_z2_2, h1_2)
+                db2 = d_z2_1 + d_z2_2
+                
+                # Backprop to h1
+                d_h1_1 = np.dot(self.W2.T, d_z2_1)
+                d_h1_2 = np.dot(self.W2.T, d_z2_2)
+                
+                # Backprop through ReLU: d_z1 = d_h1 * relu_mask
+                d_z1_1 = d_h1_1 * mask1
+                d_z1_2 = d_h1_2 * mask2
+                
+                # Backprop through Layer 1: z1 = W1 @ x + b1
+                dW1_1 = np.outer(d_z1_1, vec1)
+                dW1_2 = np.outer(d_z1_2, vec2)
+                db1 = d_z1_1 + d_z1_2
+                
+                # Update weights (gradient descent)
+                self.W2 -= learning_rate * (dW2_1 + dW2_2)
+                self.b2 -= learning_rate * db2
+                self.W1 -= learning_rate * (dW1_1 + dW1_2)
+                self.b1 -= learning_rate * db1
             
-            avg_loss = total_loss / (len(X_train) * (len(X_train) - 1) / 2)
-            print(f"Epoch {epoch + 1}/{epochs}, Loss: {avg_loss:.4f}")
+            avg_loss = total_loss / len(pairs) if pairs else 0
+            print(f"  Epoch {epoch + 1}/{epochs}, Loss: {avg_loss:.6f}, Updates: {num_updates}/{len(pairs)}")
         
         self.is_trained = True
         print("Training complete!")
+    
+    # Keep backward-compatible train() method
+    def train(self, X_train: List[np.ndarray], y_train: List[int], epochs: int = 10):
+        """Legacy training interface — converts to pair-based training"""
+        # Build pairs from individual samples
+        pairs = []
+        for i in range(len(X_train)):
+            for j in range(i + 1, len(X_train)):
+                is_similar = (y_train[i] == y_train[j])
+                pairs.append((X_train[i], X_train[j], is_similar))
+        self.train_on_pairs(pairs, epochs=epochs)
     
     def similarity(self, x1: np.ndarray, x2: np.ndarray) -> float:
         """Calculate similarity between two files (0 to 1)"""
         emb1 = self.forward(x1)
         emb2 = self.forward(x2)
         
-        # Cosine similarity
-        similarity = np.dot(emb1, emb2)
-        return float(similarity)
+        # Cosine similarity (clamp to [0, 1] for interpretability)
+        sim = np.dot(emb1, emb2)
+        return float(max(0.0, min(1.0, sim)))
     
     def save_model(self, path: Path):
         """Save model weights"""
         model_data = {
-            'W': self.W,
-            'b': self.b,
+            'W1': self.W1,
+            'b1': self.b1,
+            'W2': self.W2,
+            'b2': self.b2,
             'input_size': self.input_size,
+            'hidden_size': self.hidden_size,
             'embedding_size': self.embedding_size,
             'is_trained': self.is_trained
         }
@@ -220,9 +319,12 @@ class SimpleCNN:
         with open(path, 'rb') as f:
             model_data = pickle.load(f)
         
-        self.W = model_data['W']
-        self.b = model_data['b']
+        self.W1 = model_data['W1']
+        self.b1 = model_data['b1']
+        self.W2 = model_data['W2']
+        self.b2 = model_data['b2']
         self.input_size = model_data['input_size']
+        self.hidden_size = model_data.get('hidden_size', 512)
         self.embedding_size = model_data['embedding_size']
         self.is_trained = model_data['is_trained']
         print(f"Model loaded from {path}")
@@ -274,7 +376,9 @@ class AIDeduplicationEngine:
     def train_on_dataset(
         self, 
         file_pairs: List[Tuple[bytes, bytes, bool]], 
-        epochs: int = 10
+        epochs: int = 10,
+        learning_rate: float = 0.005,
+        margin: float = 0.3
     ):
         """
         Train model on labeled file pairs
@@ -282,21 +386,19 @@ class AIDeduplicationEngine:
         Args:
             file_pairs: List of (file1, file2, is_duplicate) tuples
             epochs: Number of training epochs
+            learning_rate: Learning rate for gradient descent
+            margin: Contrastive loss margin for dissimilar pairs
         """
         print(f"Preparing training data from {len(file_pairs)} pairs...")
         
-        X_train = []
-        y_train = []
-        
+        # Encode all files and build pair list
+        encoded_pairs = []
         for file1, file2, is_duplicate in file_pairs:
             vec1 = self.encoder.encode_file(file1)
             vec2 = self.encoder.encode_file(file2)
-            
-            X_train.extend([vec1, vec2])
-            label = 1 if is_duplicate else 0
-            y_train.extend([label, label])
+            encoded_pairs.append((vec1, vec2, is_duplicate))
         
-        self.cnn.train(X_train, y_train, epochs=epochs)
+        self.cnn.train_on_pairs(encoded_pairs, epochs=epochs, learning_rate=learning_rate, margin=margin)
     
     def save_model(self, path: Path):
         """Save trained model"""

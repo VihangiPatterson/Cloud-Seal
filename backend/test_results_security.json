@@ -1,0 +1,147 @@
+{
+  "system": "Cloud Seal PMCD Framework",
+  "security_level": "AES-256 + SHA-256 + Kyber-768 (optional)",
+  "threats_tested": 5,
+  "results": {
+    "confirmation_attack": {
+      "threat": "Confirmation Attack",
+      "tests": [
+        {
+          "test": "Different tenants produce different encryption keys",
+          "passed": true,
+          "detail": "Attacker key: d5467104fef37777... | Victim key: d2faa8bdf0a63b2f..."
+        },
+        {
+          "test": "Different tenants produce different ciphertexts",
+          "passed": true,
+          "detail": "Ciphertext sizes: attacker=80, victim=80"
+        },
+        {
+          "test": "Ciphertext hashes differ across tenants",
+          "passed": true,
+          "detail": "Attacker hash: b2c2e7a1a92cc2d2... | Victim hash: bfb6200375f0ccfd..."
+        },
+        {
+          "test": "Wrong tenant secret produces wrong key",
+          "passed": true,
+          "detail": "Attacker guessed victim's tenant_id but not secret"
+        },
+        {
+          "test": "Same tenant + same file = same key (dedup works)",
+          "passed": true,
+          "detail": "Convergent encryption preserved within tenant boundary"
+        }
+      ],
+      "verdict": "SECURE"
+    },
+    "cross_tenant_isolation": {
+      "threat": "Cross-Tenant Data Leakage",
+      "tests": [
+        {
+          "test": "Tenant B cannot decrypt Tenant A's ciphertext",
+          "passed": true,
+          "detail": "Cross-tenant decryption produces garbage or error"
+        },
+        {
+          "test": "Content hashes are consistent (for dedup lookup)",
+          "passed": true,
+          "detail": "SHA-256 of plaintext is tenant-independent"
+        },
+        {
+          "test": "Encryption keys are tenant-specific",
+          "passed": true,
+          "detail": "Key A: 26616c1244773f14... | Key B: f89c7bb0b42cbf91..."
+        },
+        {
+          "test": "Tenant can decrypt their own file",
+          "passed": true,
+          "detail": "Self-decryption produces correct plaintext"
+        },
+        {
+          "test": "All 20 tenants get unique keys for same file",
+          "passed": true,
+          "detail": "20 unique keys from 20 tenants"
+        }
+      ],
+      "verdict": "ISOLATED"
+    },
+    "blockchain_tampering": {
+      "threat": "Audit Log Tampering",
+      "tests": [
+        {
+          "test": "Unmodified chain passes validation",
+          "passed": true,
+          "detail": "Chain length: 2 blocks"
+        },
+        {
+          "test": "Tampered transaction detected",
+          "passed": true,
+          "detail": "Modified transaction in block 1 \u2014 chain validation fails"
+        },
+        {
+          "test": "Restored chain validates correctly",
+          "passed": true,
+          "detail": "After undoing tampering, chain is valid again"
+        }
+      ],
+      "verdict": "TAMPER-PROOF"
+    },
+    "bloom_filter_security": {
+      "threat": "Bloom Filter FP Exploitation",
+      "tests": [
+        {
+          "test": "FP rate within acceptable bounds (target: 1%, actual: 0.000%)",
+          "passed": true,
+          "detail": "0 false positives out of 50000 queries"
+        },
+        {
+          "test": "Zero false negatives (all known items detected)",
+          "passed": true,
+          "detail": "0 false negatives out of 1000 known items"
+        },
+        {
+          "test": "FP followed by SHA-256 verification (no data loss possible)",
+          "passed": true,
+          "detail": "Architecture: Bloom filter positive \u2192 SHA-256 exact match confirmation \u2192 no false dedup"
+        }
+      ],
+      "verdict": "BOUNDED"
+    },
+    "key_derivation": {
+      "threat": "Key Derivation Weakness",
+      "tests": [
+        {
+          "test": "Key has sufficient entropy",
+          "passed": true,
+          "detail": "30/32 unique byte values in key"
+        },
+        {
+          "test": "Avalanche effect: 46.5% bits change (target: ~50%)",
+          "passed": true,
+          "detail": "119/256 bits differ for 1-byte input change"
+        },
+        {
+          "test": "Key length = 256 bits (AES-256)",
+          "passed": true,
+          "detail": "Key length: 32 bytes = 256 bits"
+        },
+        {
+          "test": "Key derivation is deterministic",
+          "passed": true,
+          "detail": "Same content + tenant + secret \u2192 same key"
+        },
+        {
+          "test": "Different content produces different key",
+          "passed": true,
+          "detail": "Modified content \u2192 completely different key"
+        }
+      ],
+      "verdict": "SECURE"
+    }
+  },
+  "overall_verdict": {
+    "test_result": "PASS",
+    "threats_mitigated": 5,
+    "total_threats": 5
+  }
+}

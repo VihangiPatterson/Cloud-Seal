@@ -2,6 +2,28 @@
 
 const API = ""; // Empty string for relative paths (Hosting readiness)
 
+// ===== Tab Logic =====
+function switchTab(tabId, btnElement) {
+  // Hide all tabs
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  // Remove active from all buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  // Show target tab
+  document.getElementById(tabId).classList.add('active');
+  btnElement.classList.add('active');
+
+  // Trigger loads if helpful for specific tabs
+  if(tabId === 'tab-learn') {
+    if (document.getElementById("blockchainStats").textContent === "") loadBlockchainStats();
+    if (document.getElementById("pqcInfo").textContent === "") loadPQCInfo();
+  }
+}
+
 // ===== System Status =====
 async function loadSystemStatus(isManual = false) {
   const btn = document.querySelector('button[onclick="loadSystemStatus(true)"]');
@@ -22,6 +44,11 @@ async function loadSystemStatus(isManual = false) {
     document.getElementById("uniqueFiles").textContent = data.storage.unique_files;
     document.getElementById("dedupRatio").textContent =
       (data.storage.deduplication_ratio * 100).toFixed(1) + "%";
+    
+    // Update PQC Stat
+    if (data.pqc && data.pqc.algorithm) {
+        document.getElementById("pqcStatus").textContent = data.pqc.algorithm;
+    }
 
   } catch (err) {
     console.error("Failed to load system status:", err);
@@ -32,13 +59,17 @@ async function loadSystemStatus(isManual = false) {
 
 // ===== Upload with Advanced Options =====
 async function upload() {
-  const tenant = document.getElementById("tenantId").value;
+  const user = document.getElementById("tenantId").value;
   const file = document.getElementById("fileInput").files[0];
   const usePQC = document.getElementById("usePQC").checked;
   const useAI = document.getElementById("useAI").checked;
 
-  if (!tenant || !file) {
-    alert("❌ Tenant ID and file required");
+  if (!user || user.trim() === "") {
+    alert("❌ Please Enter a User ID at the top to proceed!");
+    return;
+  }
+  if (!file) {
+    alert("❌ Please select a file to upload!");
     return;
   }
 
@@ -57,11 +88,11 @@ async function upload() {
     const url = `${API}./upload?${queryParams.toString()}`;
 
     const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        "X-Tenant-ID": tenant
-      },
-      body: form
+        method: "POST",
+        headers: {
+            "X-Tenant-ID": user
+        },
+        body: form
     });
 
     const data = await res.json();
@@ -108,8 +139,13 @@ async function shareFile() {
   const receiver = document.getElementById("receiverID").value;
   const sender = document.getElementById("tenantId").value;
 
-  if (!cid || !receiver || !sender) {
-    alert("❌ Please fill all fields (CID, Receiver ID, and your Tenant ID)");
+  if (!sender || sender.trim() === "") {
+    alert("❌ Please enter your User ID at the top of the dashboard first!");
+    return;
+  }
+
+  if (!cid || !receiver) {
+    alert("❌ Please fill all fields (CID and Receiver User ID)");
     return;
   }
 
@@ -127,6 +163,10 @@ async function shareFile() {
     });
 
     const data = await res.json();
+
+    if(res.status !== 200) {
+        throw new Error(data.detail || "Server Error");
+    }
 
     let resultText = `🔐 Quantum-Safe Sharing Complete!\n\n`;
     resultText += `File CID: ${data.file_cid}\n`;
@@ -146,24 +186,24 @@ async function shareFile() {
   }
 }
 
-// ===== My Files =====
+// ===== Bucket =====
 async function loadMyFiles() {
-  const tenant = document.getElementById("tenantId").value;
-  if (!tenant) {
+  const user = document.getElementById("tenantId").value;
+  if (!user || user.trim() === "") {
     document.getElementById("myFiles").innerHTML =
-      '<p style="color: #94a3b8;">Enter Tenant ID to view your files</p>';
+      '<p style="color: #94a3b8; padding: 1rem;">Enter User ID above and click Proceed to view your bucket.</p>';
     return;
   }
 
   try {
-    const res = await fetch(`${API}./files/${tenant}`);
+    const res = await fetch(`${API}./files/${user}`);
     const data = await res.json();
 
     const container = document.getElementById("myFiles");
     container.innerHTML = "";
 
     if (data.length === 0) {
-      container.innerHTML = '<p style="color: #94a3b8;">No files owned by this tenant.</p>';
+      container.innerHTML = '<p style="color: #94a3b8; padding: 1rem;">No files found in this bucket.</p>';
       return;
     }
 
@@ -171,8 +211,8 @@ async function loadMyFiles() {
       const div = document.createElement("div");
       div.className = "file-item";
 
-      const fileName = f.filenames && f.filenames[tenant]
-        ? f.filenames[tenant]
+      const fileName = f.filenames && f.filenames[user]
+        ? f.filenames[user]
         : "Unknown";
 
       div.innerHTML = `
@@ -194,7 +234,7 @@ async function loadMyFiles() {
 
 // ===== Delete File =====
 async function deleteFile(cid) {
-  const tenant = document.getElementById("tenantId").value;
+  const user = document.getElementById("tenantId").value;
 
   if (!confirm(`Delete file ${cid.substring(0, 16)}...?`)) {
     return;
@@ -204,7 +244,7 @@ async function deleteFile(cid) {
     const res = await fetch(`${API}./delete/${cid}`, {
       method: "POST",
       headers: {
-        "X-Tenant-ID": tenant
+        "X-Tenant-ID": user
       }
     });
 
@@ -240,12 +280,12 @@ async function loadFiles() {
 // ===== Audit Log =====
 async function loadAudit() {
   const filterMy = document.getElementById("filterMyAudit")?.checked;
-  const tenant = document.getElementById("tenantId").value;
+  const user = document.getElementById("tenantId").value;
 
   try {
     let url = `${API}./audit`;
-    if (filterMy && tenant) {
-      url += `?tenant_id=${tenant}`;
+    if (filterMy && user && user.trim() !== "") {
+      url += `?tenant_id=${user}`;
     }
 
     const res = await fetch(url);
@@ -288,6 +328,10 @@ async function trainAI() {
 
     const data = await res.json();
 
+    if(res.status !== 200) {
+        throw new Error(data.detail || "Server Error");
+    }
+
     let resultText = `🧠 AI Training Complete!\n\n`;
     resultText += `Status: ${data.status}\n`;
     resultText += `Training Pairs: ${data.training_pairs}\n`;
@@ -312,28 +356,45 @@ async function loadPQCInfo() {
     const data = await res.json();
 
     document.getElementById("pqcInfo").textContent =
-      JSON.stringify(data, null, 2);
+        JSON.stringify(data, null, 2);
 
   } catch (err) {
     document.getElementById("pqcInfo").textContent = `Error: ${err.message}`;
   }
 }
 
-// ===== Tenant Change Handler =====
+// ===== User Change Handler =====
 function onTenantChange() {
+  const user = document.getElementById("tenantId").value;
+  if(!user || user.trim() === "") {
+      alert("Please enter a User ID first.");
+      return;
+  }
+
+  // Reload personal views with the new user context
   loadMyFiles();
   loadAudit();
+  
+  // Reload global views
   loadSystemStatus(false);
   loadFiles();
-  // Refresh advanced details if they were open/visible
-  if (document.getElementById("blockchainStats").textContent !== "") loadBlockchainStats();
-  if (document.getElementById("pqcInfo").textContent !== "") loadPQCInfo();
+  
+  // Provide visual feedback
+  const btn = document.querySelector('button[onclick="onTenantChange()"]');
+  const orgText = btn.textContent;
+  btn.textContent = "✅ Connected";
+  btn.style.background = "var(--success)";
+  setTimeout(() => {
+    btn.textContent = orgText;
+    btn.style.background = "linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)";
+  }, 1500);
 }
 
 // ===== Auto-load on page load =====
 window.addEventListener("DOMContentLoaded", () => {
   loadSystemStatus(false);
   loadFiles();
+  loadAudit(); // Load global audit unconditionally
 });
 
 // ===== Auto-refresh status every 10 seconds =====

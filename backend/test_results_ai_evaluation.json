@@ -1,0 +1,454 @@
+{
+  "test_name": "AI Model Evaluation",
+  "model_config": {
+    "architecture": "Siamese CNN (2-layer)",
+    "input_dimension": 2048,
+    "hidden_dimension": 512,
+    "embedding_dimension": 128,
+    "activation": "ReLU",
+    "normalisation": "L2",
+    "similarity_metric": "Cosine Similarity",
+    "training_epochs": 50,
+    "learning_rate": 0.01,
+    "margin": 0.4,
+    "loss_function": "Contrastive Loss (squared)",
+    "training_time_seconds": 6.08
+  },
+  "dataset": {
+    "total_pairs": 44,
+    "positive_pairs": 8,
+    "negative_pairs": 36,
+    "file_sizes": [
+      "1KB",
+      "10KB",
+      "100KB",
+      "500KB"
+    ],
+    "variation_types": [
+      "exact_duplicate",
+      "encrypted_same_key",
+      "completely_different",
+      "cross_tenant_encrypted",
+      "near_duplicate_tiny_edit",
+      "near_duplicate_moderate_edit",
+      "near_duplicate_appended",
+      "near_duplicate_noise",
+      "same_size_different"
+    ],
+    "random_seed": 42
+  },
+  "confusion_matrix_085": {
+    "true_positives": 8,
+    "true_negatives": 8,
+    "false_positives": 28,
+    "false_negatives": 0
+  },
+  "metrics_085": {
+    "accuracy": 0.3636,
+    "precision": 0.2222,
+    "recall": 1.0,
+    "f1_score": 0.3636
+  },
+  "predictions": [
+    {
+      "label": "exact_duplicate_document_small",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "exact_duplicate_document_medium",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "exact_duplicate_image_like",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "exact_duplicate_binary_large",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "encrypted_same_key_document_small",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 0.9983
+    },
+    {
+      "label": "encrypted_same_key_document_medium",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 0.9998
+    },
+    {
+      "label": "encrypted_same_key_image_like",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 0.9999
+    },
+    {
+      "label": "encrypted_same_key_binary_large",
+      "ground_truth": true,
+      "predicted": true,
+      "similarity_score": 0.9999
+    },
+    {
+      "label": "completely_different_document_small",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.3186
+    },
+    {
+      "label": "completely_different_document_medium",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.2201
+    },
+    {
+      "label": "completely_different_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9889
+    },
+    {
+      "label": "completely_different_binary_large",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.2117
+    },
+    {
+      "label": "cross_tenant_encrypted_document_small",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9998
+    },
+    {
+      "label": "cross_tenant_encrypted_document_medium",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "cross_tenant_encrypted_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9999
+    },
+    {
+      "label": "cross_tenant_encrypted_binary_large",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9999
+    },
+    {
+      "label": "near_dup_tiny_edit_document_small",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "near_dup_moderate_edit_document_small",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9765
+    },
+    {
+      "label": "near_dup_appended_document_small",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.987
+    },
+    {
+      "label": "near_dup_noise_document_small",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9974
+    },
+    {
+      "label": "near_dup_tiny_edit_document_medium",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9999
+    },
+    {
+      "label": "near_dup_moderate_edit_document_medium",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.8696
+    },
+    {
+      "label": "near_dup_appended_document_medium",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.8809
+    },
+    {
+      "label": "near_dup_noise_document_medium",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.8677
+    },
+    {
+      "label": "near_dup_tiny_edit_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "near_dup_moderate_edit_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9999
+    },
+    {
+      "label": "near_dup_appended_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "near_dup_noise_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9898
+    },
+    {
+      "label": "near_dup_tiny_edit_binary_large",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "near_dup_moderate_edit_binary_large",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9851
+    },
+    {
+      "label": "near_dup_appended_binary_large",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "near_dup_noise_binary_large",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.6354
+    },
+    {
+      "label": "same_size_different_document_small",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.2878
+    },
+    {
+      "label": "same_size_different_document_medium",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.2172
+    },
+    {
+      "label": "same_size_different_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 0.9893
+    },
+    {
+      "label": "same_size_different_binary_large",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.2127
+    },
+    {
+      "label": "reversed_document_small",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "shuffled_document_small",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "reversed_document_medium",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "shuffled_document_medium",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "reversed_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "shuffled_image_like",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    },
+    {
+      "label": "reversed_binary_large",
+      "ground_truth": false,
+      "predicted": false,
+      "similarity_score": 0.0733
+    },
+    {
+      "label": "shuffled_binary_large",
+      "ground_truth": false,
+      "predicted": true,
+      "similarity_score": 1.0
+    }
+  ],
+  "roc_curve": [
+    {
+      "threshold": 0.0,
+      "tpr": 1.0,
+      "fpr": 1.0,
+      "accuracy": 0.1818,
+      "f1_score": 0.3077
+    },
+    {
+      "threshold": 0.1,
+      "tpr": 1.0,
+      "fpr": 0.9722,
+      "accuracy": 0.2045,
+      "f1_score": 0.3137
+    },
+    {
+      "threshold": 0.2,
+      "tpr": 1.0,
+      "fpr": 0.9722,
+      "accuracy": 0.2045,
+      "f1_score": 0.3137
+    },
+    {
+      "threshold": 0.3,
+      "tpr": 1.0,
+      "fpr": 0.8333,
+      "accuracy": 0.3182,
+      "f1_score": 0.3478
+    },
+    {
+      "threshold": 0.4,
+      "tpr": 1.0,
+      "fpr": 0.8056,
+      "accuracy": 0.3409,
+      "f1_score": 0.3556
+    },
+    {
+      "threshold": 0.5,
+      "tpr": 1.0,
+      "fpr": 0.8056,
+      "accuracy": 0.3409,
+      "f1_score": 0.3556
+    },
+    {
+      "threshold": 0.6,
+      "tpr": 1.0,
+      "fpr": 0.8056,
+      "accuracy": 0.3409,
+      "f1_score": 0.3556
+    },
+    {
+      "threshold": 0.7,
+      "tpr": 1.0,
+      "fpr": 0.7778,
+      "accuracy": 0.3636,
+      "f1_score": 0.3636
+    },
+    {
+      "threshold": 0.75,
+      "tpr": 1.0,
+      "fpr": 0.7778,
+      "accuracy": 0.3636,
+      "f1_score": 0.3636
+    },
+    {
+      "threshold": 0.8,
+      "tpr": 1.0,
+      "fpr": 0.7778,
+      "accuracy": 0.3636,
+      "f1_score": 0.3636
+    },
+    {
+      "threshold": 0.85,
+      "tpr": 1.0,
+      "fpr": 0.7778,
+      "accuracy": 0.3636,
+      "f1_score": 0.3636
+    },
+    {
+      "threshold": 0.9,
+      "tpr": 1.0,
+      "fpr": 0.6944,
+      "accuracy": 0.4318,
+      "f1_score": 0.3902
+    },
+    {
+      "threshold": 0.95,
+      "tpr": 1.0,
+      "fpr": 0.6944,
+      "accuracy": 0.4318,
+      "f1_score": 0.3902
+    },
+    {
+      "threshold": 0.99,
+      "tpr": 1.0,
+      "fpr": 0.5278,
+      "accuracy": 0.5682,
+      "f1_score": 0.4571
+    },
+    {
+      "threshold": 1.0,
+      "tpr": 0.375,
+      "fpr": 0.0556,
+      "accuracy": 0.8409,
+      "f1_score": 0.4615
+    }
+  ],
+  "auc": 0.7968,
+  "baseline_comparison": {
+    "random_classifier": {
+      "method": "Random Classifier (50/50)",
+      "accuracy": 0.6136,
+      "precision": 0.2632,
+      "recall": 0.625,
+      "f1_score": 0.3704
+    },
+    "hash_exact_match": {
+      "method": "SHA-256 Exact Hash Match",
+      "accuracy": 0.8636,
+      "precision": 0.6667,
+      "recall": 0.5,
+      "f1_score": 0.5714
+    },
+    "siamese_cnn": {
+      "method": "Siamese CNN (Cloud Seal)",
+      "accuracy": 0.3636,
+      "precision": 0.2222,
+      "recall": 1.0,
+      "f1_score": 0.3636
+    }
+  },
+  "overall_verdict": {
+    "test_result": "FAIL",
+    "auc_score": 0.7968,
+    "best_threshold": 1.0
+  }
+}

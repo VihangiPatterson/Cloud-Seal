@@ -160,7 +160,10 @@ def main():
         "test_deduplication_efficiency.py",
         "test_bloom_filter_accuracy.py",
         "test_multitenant_safety.py",
-        "test_blockchain_integrity.py"
+        "test_blockchain_integrity.py",
+        "test_ai_evaluation.py",
+        "test_performance_benchmarks.py",
+        "test_security_threat_model.py"
     ]
     
     results = {}

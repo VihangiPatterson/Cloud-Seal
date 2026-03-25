@@ -65,6 +65,94 @@ main {
     padding: 0 1rem;
 }
 
+/* ===== Tabs System ===== */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    background: transparent;
+    border: 2px solid transparent;
+    color: var(--text-secondary);
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.2s ease;
+    margin: 0;
+    width: auto;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+    background: var(--bg-hover);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+    background: var(--bg-card);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Drawer (Details/Summary) ===== */
+.drawer summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+    border-radius: 8px;
+}
+
+.drawer summary::-webkit-details-marker {
+    display: none;
+}
+
+.drawer summary::after {
+    content: '▼';
+    font-size: 1rem;
+    color: var(--primary);
+    transition: transform 0.3s;
+    padding-right: 1rem;
+}
+
+.drawer[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.drawer-content {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 1.5rem;
+    animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* ===== Cards ===== */
 .card {
     background: var(--bg-card);
@@ -88,6 +176,10 @@ main {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.drawer summary h2 {
+    margin-bottom: 0;
 }
 
 /* ===== Status Grid ===== */
@@ -144,15 +236,8 @@ main {
 }
 
 @keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.7;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 /* ===== Forms ===== */
@@ -272,6 +357,11 @@ button {
     font-size: 0.9rem;
     white-space: pre-wrap;
     color: var(--text-primary);
+    display: none; /* hidden when empty */
+}
+
+.result-box:not(:empty) {
+    display: block;
 }
 
 .result-box.success {

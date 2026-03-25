@@ -38,138 +38,184 @@
           <span class="status-label">💎 Unique Files</span>
           <span id="uniqueFiles" class="status-value">-</span>
         </div>
-        <div class="status-item" style="border-bottom: 2px solid var(--primary);">
+        <div class="status-item">
           <span class="status-label">♻️ Dedup Ratio</span>
           <span id="dedupRatio" class="status-value">-</span>
+        </div>
+        <div class="status-item" style="border-bottom: 2px solid var(--primary);">
+          <span class="status-label">🛡️ PQC Status</span>
+          <span id="pqcStatus" class="status-value">-</span>
         </div>
       </div>
       <button onclick="loadSystemStatus(true)" class="btn-secondary">🔄 Refresh Dashboard</button>
     </section>
 
-    <!-- Upload Section -->
-    <section class="card">
-      <h2>📤 Secure Upload</h2>
-      <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
-        Upload files securely with quantum-resistant encryption and AI-powered duplicate detection.
+    <!-- Global User Selection (Applies to all actions) -->
+    <section class="card" style="background-color: var(--bg-hover); border-color: var(--primary);">
+      <h2 style="margin-bottom: 1rem; font-size: 1.25rem;">👤 Active User Session</h2>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="text" id="tenantId" placeholder="Enter User ID (e.g. User A)" style="max-width: 300px; margin-top: 0; margin-bottom: 0;" />
+        <button onclick="onTenantChange()" class="btn-primary" style="margin-top: 0; width: auto; padding: 0.75rem 2rem;">Proceed</button>
+      </div>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">
+        Enter your User ID and click Proceed to securely switch your session context.
       </p>
+    </section>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <div>
-          <label>Current Tenant</label>
-          <select id="tenantId" onchange="onTenantChange()">
-            <option value="tenant_A">Tenant A (Commercial)</option>
-            <option value="tenant_B">Tenant B (Enterprise)</option>
-            <option value="tenant_C">Tenant C (Public)</option>
-          </select>
-        </div>
-        <div>
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-main', this)">Main Dashboard</button>
+      <button class="tab-btn" onclick="switchTab('tab-learn', this)">Learn More</button>
+      <button class="tab-btn" onclick="switchTab('tab-help', this)">Help to Improve Us</button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 1: MAIN DASHBOARD -->
+    <!-- ========================================== -->
+    <div id="tab-main" class="tab-content active">
+      
+      <!-- Upload Section -->
+      <section class="card">
+        <h2>📤 Secure Upload</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">
+          Upload files securely with quantum-resistant encryption and AI-powered duplicate detection.
+        </p>
+
+        <div style="margin-bottom: 20px;">
           <label>Select File</label>
           <input type="file" id="fileInput" />
         </div>
-      </div>
 
-      <div class="options-group">
-        <h3>Advanced Security Options</h3>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
-          Enable cutting-edge security features for maximum protection and efficiency.
-        </p>
-        <label class="checkbox-label"
-          title="Uses Kyber-768 (NIST Level 3) to protect against future quantum computer attacks">
-          <input type="checkbox" id="usePQC" checked />
-          <span>🔒 Post-Quantum Encryption</span>
-          <small style="display: block; color: var(--text-muted); margin-left: 28px; margin-top: 4px;">
-            Protects your files against future quantum computer attacks using NIST-approved Kyber-768 algorithm
-          </small>
-        </label>
-        <label class="checkbox-label" title="Uses AI to detect similar files even if they're slightly different">
-          <input type="checkbox" id="useAI" checked />
-          <span>🤖 AI-Powered Similarity Detection</span>
-          <small style="display: block; color: var(--text-muted); margin-left: 28px; margin-top: 4px;">
-            Finds near-duplicate files (90%+ similar) using Convolutional Neural Networks, saving additional storage
-          </small>
-        </label>
-      </div>
-
-      <button onclick="upload()" class="btn-primary">🚀 Start Secure Upload</button>
-      <div id="uploadResult" class="result-box"></div>
-    </section>
-
-    <!-- Sharing Section -->
-    <section class="card">
-      <h2>🔗 Quantum-Safe Sharing</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <div>
-          <label>File CID</label>
-          <input id="shareCID" placeholder="Enter CID string" />
+        <div class="options-group">
+          <h3>Advanced Security Options</h3>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+            Enable cutting-edge security features for maximum protection and efficiency.
+          </p>
+          <label class="checkbox-label"
+            title="Uses Kyber-768 (NIST Level 3) to protect against future quantum computer attacks">
+            <input type="checkbox" id="usePQC" checked />
+            <span>🔒 Post-Quantum Encryption</span>
+            <small style="display: block; color: var(--text-muted); margin-left: 28px; margin-top: 4px;">
+              Protects your files against future quantum computer attacks using NIST-approved Kyber-768 algorithm
+            </small>
+          </label>
+          <label class="checkbox-label" title="Uses AI to detect similar files even if they're slightly different">
+            <input type="checkbox" id="useAI" checked />
+            <span>🤖 AI-Powered Similarity Detection</span>
+            <small style="display: block; color: var(--text-muted); margin-left: 28px; margin-top: 4px;">
+              Finds near-duplicate files (90%+ similar) using Convolutional Neural Networks, saving additional storage
+            </small>
+          </label>
         </div>
-        <div>
-          <label>Receiver Tenant</label>
-          <select id="receiverID">
-            <option value="tenant_A">Tenant A</option>
-            <option value="tenant_B">Tenant B</option>
-            <option value="tenant_C">Tenant C</option>
-          </select>
-        </div>
-      </div>
-      <button onclick="shareFile()" class="btn-secondary">🤝 Create PQ Link</button>
-      <div id="shareResult" class="result-box"></div>
-    </section>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto;">
-      <!-- My Files -->
-      <section class="card" style="margin: 0; max-width: none;">
-        <h2>📁 Personal Vault</h2>
-        <div id="myFiles" class="file-list"></div>
-        <button onclick="loadMyFiles()" class="btn-secondary" style="width: 100%;">Refresh My Vault</button>
+        <button onclick="upload()" class="btn-primary">🚀 Start Secure Upload</button>
+        <div id="uploadResult" class="result-box"></div>
       </section>
 
-      <!-- All Files -->
-      <section class="card" style="margin: 0; max-width: none;">
-        <h2>🗂️ Global Reference</h2>
-        <pre id="files" class="code-block"></pre>
-        <button onclick="loadFiles()" class="btn-secondary" style="width: 100%;">View All Hashes</button>
+      <!-- Bucket (Personal Vault) -->
+      <section class="card">
+        <details class="drawer">
+          <summary><h2>📁 Bucket</h2></summary>
+          <div class="drawer-content">
+            <div id="myFiles" class="file-list">
+              <p style="color: var(--text-muted); padding: 1rem;">Enter a User ID and click Proceed above to view your bucket.</p>
+            </div>
+            <button onclick="loadMyFiles()" class="btn-secondary" style="width: 100%;">Refresh Bucket</button>
+          </div>
+        </details>
       </section>
+
+      <!-- Global Reference -->
+      <section class="card">
+        <details class="drawer">
+          <summary><h2>🗂️ Global Reference Map</h2></summary>
+          <div class="drawer-content">
+            <pre id="files" class="code-block"></pre>
+            <button onclick="loadFiles()" class="btn-secondary" style="width: 100%;">Refresh Global Map</button>
+          </div>
+        </details>
+      </section>
+
+      <!-- Sharing Section (Moved down) -->
+      <section class="card">
+        <h2>🔗 Quantum-Safe Sharing</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div>
+            <label>File CID</label>
+            <input type="text" id="shareCID" placeholder="Enter CID string" />
+          </div>
+          <div>
+            <label>Receiver User</label>
+            <input type="text" id="receiverID" placeholder="e.g. User B" />
+          </div>
+        </div>
+        <button onclick="shareFile()" class="btn-secondary">🤝 Create PQ Link</button>
+        <div id="shareResult" class="result-box"></div>
+      </section>
+
     </div>
 
-    <!-- Audit Section -->
-    <section class="card">
-      <h2>🔍 Blockchain Ledger</h2>
-      <label class="checkbox-label" style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px;">
-        <input type="checkbox" id="filterMyAudit" onchange="loadAudit()" />
-        <span>View entries for current tenant only</span>
-      </label>
-      <pre id="audit" class="code-block"></pre>
-      <button onclick="loadAudit()" class="btn-secondary">📜 Pull Latest Logs</button>
-    </section>
-
-    <!-- Advanced Analysis -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; max-width: 1000px; margin: 0 auto;">
-      <section class="card" style="margin: 0;">
-        <h2>⛓️ Blockchain</h2>
-        <button onclick="loadBlockchainStats()" class="btn-secondary" style="width: 100%;">Metrics</button>
-        <pre id="blockchainStats" class="code-block" style="font-size: 0.75rem;"></pre>
+    <!-- ========================================== -->
+    <!-- TAB 2: LEARN MORE -->
+    <!-- ========================================== -->
+    <div id="tab-learn" class="tab-content">
+      
+      <!-- Audit Section (Drawer) -->
+      <section class="card">
+        <details class="drawer" open>
+          <summary><h2>🔍 Blockchain Ledger</h2></summary>
+          <div class="drawer-content">
+            <label class="checkbox-label" style="background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px;">
+              <input type="checkbox" id="filterMyAudit" onchange="loadAudit()" />
+              <span>View entries for current User only</span>
+            </label>
+            <pre id="audit" class="code-block"></pre>
+            <button onclick="loadAudit()" class="btn-secondary">📜 Pull Latest Logs</button>
+          </div>
+        </details>
       </section>
-      <section class="card" style="margin: 0;">
-        <h2>🧠 AI Siamese Network</h2>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
-          Train the CNN model to detect bit-level similarities beyond cryptographic hashes.
+
+      <!-- Advanced Context -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1000px; margin: 0 auto;">
+        <section class="card" style="margin: 0;">
+          <h2>⛓️ Blockchain Metrics</h2>
+          <button onclick="loadBlockchainStats()" class="btn-secondary" style="width: 100%;">Refresh Metrics</button>
+          <pre id="blockchainStats" class="code-block" style="font-size: 0.75rem; margin-top: 15px;"></pre>
+        </section>
+
+        <section class="card" style="margin: 0;">
+          <h2>🛡️ Kyber-768 PQC Info</h2>
+          <button onclick="loadPQCInfo()" class="btn-secondary" style="width: 100%;">Fetch Details</button>
+          <pre id="pqcInfo" class="code-block" style="font-size: 0.75rem; margin-top: 15px;"></pre>
+        </section>
+      </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: HELP TO IMPROVE US -->
+    <!-- ========================================== -->
+    <div id="tab-help" class="tab-content">
+      <section class="card" style="max-width: 600px; margin: 0 auto;">
+        <h2>🧠 AI Siamese Network Training</h2>
+        <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px;">
+          By authorizing the Siamese CNN to train on encrypted byte patterns within your data, you help the system learn how to identify near-duplicate files (such as slightly modified documents or lower-resolution images) across the network without ever decrypting the content. 
         </p>
 
-        <div style="background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
-          <label style="margin-bottom: 5px;">Training Target (Epochs)</label>
-          <input type="number" id="trainEpochs" value="20" min="5" max="100" style="margin-bottom: 0;" />
+        <div style="background: var(--bg-secondary); padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color);">
+          <label style="margin-bottom: 8px; font-weight: bold;">Set Training Target (Epochs)</label>
+          <input type="number" id="trainEpochs" value="20" min="5" max="100" />
         </div>
 
-        <button onclick="trainAI()" class="btn-primary" style="width: 100%;">🚀 Start Model Training</button>
+        <button onclick="trainAI()" class="btn-primary" style="width: 100%; box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);">
+          🚀 Contribute to Model Training
+        </button>
         <div id="trainResult" class="result-box"
-          style="margin-top: 15px; padding: 12px; font-size: 0.8rem; border-left-color: var(--accent);"></div>
-      </section>
-      <section class="card" style="margin: 0;">
-        <h2>🛡️ PQC Info</h2>
-        <button onclick="loadPQCInfo()" class="btn-secondary" style="width: 100%;">Details</button>
-        <pre id="pqcInfo" class="code-block" style="font-size: 0.75rem;"></pre>
+          style="margin-top: 20px; padding: 15px; font-size: 0.9rem; border-left-color: var(--accent);">
+        </div>
       </section>
     </div>
+
   </main>
 
   <footer>
