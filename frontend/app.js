@@ -12,13 +12,13 @@ function switchTab(tabId, btnElement) {
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  
+
   // Show target tab
   document.getElementById(tabId).classList.add('active');
   btnElement.classList.add('active');
 
   // Trigger loads if helpful for specific tabs
-  if(tabId === 'tab-learn') {
+  if (tabId === 'tab-learn') {
     if (document.getElementById("blockchainStats").textContent === "") loadBlockchainStats();
     if (document.getElementById("pqcInfo").textContent === "") loadPQCInfo();
   }
@@ -42,10 +42,10 @@ async function loadSystemStatus(isManual = false) {
     document.getElementById("blockCount").textContent = data.blockchain.chain_length;
     document.getElementById("totalFiles").textContent = data.storage.total_files;
     document.getElementById("uniqueFiles").textContent = data.storage.unique_files;
-    
+
     // Update PQC Stat
     if (data.pqc && data.pqc.algorithm) {
-        document.getElementById("pqcStatus").textContent = data.pqc.algorithm;
+      document.getElementById("pqcStatus").textContent = data.pqc.algorithm;
     }
 
   } catch (err) {
@@ -86,11 +86,11 @@ async function upload() {
     const url = `${API}./upload?${queryParams.toString()}`;
 
     const res = await fetch(url, {
-        method: "POST",
-        headers: {
-            "X-Tenant-ID": user
-        },
-        body: form
+      method: "POST",
+      headers: {
+        "X-Tenant-ID": user
+      },
+      body: form
     });
 
     const data = await res.json();
@@ -162,8 +162,8 @@ async function shareFile() {
 
     const data = await res.json();
 
-    if(res.status !== 200) {
-        throw new Error(data.detail || "Server Error");
+    if (res.status !== 200) {
+      throw new Error(data.detail || "Server Error");
     }
 
     let resultText = `🔐 Quantum-Safe Sharing Complete!\n\n`;
@@ -326,8 +326,8 @@ async function trainAI() {
 
     const data = await res.json();
 
-    if(res.status !== 200) {
-        throw new Error(data.detail || "Server Error");
+    if (res.status !== 200) {
+      throw new Error(data.detail || "Server Error");
     }
 
     let resultText = `🧠 AI Training Complete!\n\n`;
@@ -354,7 +354,7 @@ async function loadPQCInfo() {
     const data = await res.json();
 
     document.getElementById("pqcInfo").textContent =
-        JSON.stringify(data, null, 2);
+      JSON.stringify(data, null, 2);
 
   } catch (err) {
     document.getElementById("pqcInfo").textContent = `Error: ${err.message}`;
@@ -364,19 +364,19 @@ async function loadPQCInfo() {
 // ===== User Change Handler =====
 function onTenantChange() {
   const user = document.getElementById("tenantId").value;
-  if(!user || user.trim() === "") {
-      alert("Please enter a User ID first.");
-      return;
+  if (!user || user.trim() === "") {
+    alert("Please enter a User ID first.");
+    return;
   }
 
   // Reload personal views with the new user context
   loadMyFiles();
   loadAudit();
-  
+
   // Reload global views
   loadSystemStatus(false);
   loadFiles();
-  
+
   // Provide visual feedback
   const btn = document.querySelector('button[onclick="onTenantChange()"]');
   const orgText = btn.textContent;

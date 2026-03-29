@@ -296,7 +296,12 @@ async def share_file(
     })
     blockchain.mine_pending_transactions()
     
-    return {"status": "shared", "shared_with": x_receiver_id}
+    return {
+        "status": "shared", 
+        "shared_with": x_receiver_id,
+        "quantum_safe": True,
+        "encapsulated_key": ciphertext.hex()[:64] + "..." if isinstance(ciphertext, bytes) else str(ciphertext)[:64]
+    }
 
 @app.get("/")
 async def read_index():
