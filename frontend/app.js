@@ -42,8 +42,6 @@ async function loadSystemStatus(isManual = false) {
     document.getElementById("blockCount").textContent = data.blockchain.chain_length;
     document.getElementById("totalFiles").textContent = data.storage.total_files;
     document.getElementById("uniqueFiles").textContent = data.storage.unique_files;
-    document.getElementById("dedupRatio").textContent =
-      (data.storage.deduplication_ratio * 100).toFixed(1) + "%";
     
     // Update PQC Stat
     if (data.pqc && data.pqc.algorithm) {

@@ -21,14 +21,7 @@ from encryption import encrypt_file, generate_convergent_key
 
 def generate_synthetic_file(base_content: bytes, variation: str = "none", 
                              variation_amount: float = 0.0) -> bytes:
-    """
-    Generate test files with controlled variations.
-    
-    Args:
-        base_content: Original file bytes
-        variation: Type of variation (none, byte_flip, append, truncate, noise)
-        variation_amount: How much variation (0.0 = identical, 1.0 = completely different)
-    """
+  
     content = bytearray(base_content)
     
     if variation == "none":
@@ -71,9 +64,6 @@ def generate_synthetic_file(base_content: bytes, variation: str = "none",
 def create_test_dataset():
     """
     Create a labeled dataset of file pairs for evaluation.
-    
-    Returns:
-        List of (file1_bytes, file2_bytes, is_same_content, label_description)
     """
     print("\n" + "=" * 60)
     print("Phase 1: Generating Synthetic Test Dataset")
@@ -215,9 +205,6 @@ def train_model(dataset):
 def evaluate_confusion_matrix(engine, dataset, threshold=0.85):
     """
     Compute confusion matrix at a given threshold.
-    
-    Returns:
-        dict with TP, TN, FP, FN, precision, recall, F1, accuracy
     """
     tp = 0  # True Positive: correctly identified as duplicate
     tn = 0  # True Negative: correctly identified as different
@@ -273,16 +260,12 @@ def evaluate_confusion_matrix(engine, dataset, threshold=0.85):
 def generate_roc_curve(engine, dataset):
     """
     Generate ROC curve data by evaluating at multiple thresholds.
-    
-    Returns:
-        List of (threshold, TPR, FPR) tuples
     """
     print("\n" + "=" * 60)
     print("Phase 4: Generating ROC Curve Data")
     print("=" * 60)
     
-    thresholds = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.75, 
-                  0.8, 0.85, 0.9, 0.95, 0.99, 1.0]
+    thresholds = [0.0, 0.5, 0.75, 0.85, 0.95, 1.0]
     
     roc_data = []
     

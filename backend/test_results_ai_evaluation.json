@@ -12,7 +12,7 @@
     "learning_rate": 0.01,
     "margin": 0.4,
     "loss_function": "Contrastive Loss (squared)",
-    "training_time_seconds": 6.08
+    "training_time_seconds": 5.79
   },
   "dataset": {
     "total_pairs": 44,
@@ -78,19 +78,19 @@
       "label": "encrypted_same_key_document_small",
       "ground_truth": true,
       "predicted": true,
-      "similarity_score": 0.9983
+      "similarity_score": 0.9996
     },
     {
       "label": "encrypted_same_key_document_medium",
       "ground_truth": true,
       "predicted": true,
-      "similarity_score": 0.9998
+      "similarity_score": 1.0
     },
     {
       "label": "encrypted_same_key_image_like",
       "ground_truth": true,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 0.9998
     },
     {
       "label": "encrypted_same_key_binary_large",
@@ -102,31 +102,31 @@
       "label": "completely_different_document_small",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.3186
+      "similarity_score": 0.5398
     },
     {
       "label": "completely_different_document_medium",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.2201
+      "similarity_score": 0.7283
     },
     {
       "label": "completely_different_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9889
+      "similarity_score": 0.9831
     },
     {
       "label": "completely_different_binary_large",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.2117
+      "similarity_score": 0.0
     },
     {
       "label": "cross_tenant_encrypted_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9998
+      "similarity_score": 1.0
     },
     {
       "label": "cross_tenant_encrypted_document_medium",
@@ -156,43 +156,43 @@
       "label": "near_dup_moderate_edit_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9765
+      "similarity_score": 0.9547
     },
     {
       "label": "near_dup_appended_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.987
+      "similarity_score": 0.9709
     },
     {
       "label": "near_dup_noise_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9974
+      "similarity_score": 0.9937
     },
     {
       "label": "near_dup_tiny_edit_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 1.0
     },
     {
       "label": "near_dup_moderate_edit_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.8696
+      "similarity_score": 0.958
     },
     {
       "label": "near_dup_appended_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.8809
+      "similarity_score": 0.9191
     },
     {
       "label": "near_dup_noise_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.8677
+      "similarity_score": 0.9137
     },
     {
       "label": "near_dup_tiny_edit_image_like",
@@ -204,7 +204,7 @@
       "label": "near_dup_moderate_edit_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 0.9998
     },
     {
       "label": "near_dup_appended_image_like",
@@ -216,7 +216,7 @@
       "label": "near_dup_noise_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9898
+      "similarity_score": 0.9832
     },
     {
       "label": "near_dup_tiny_edit_binary_large",
@@ -228,7 +228,7 @@
       "label": "near_dup_moderate_edit_binary_large",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9851
+      "similarity_score": 0.9914
     },
     {
       "label": "near_dup_appended_binary_large",
@@ -240,31 +240,31 @@
       "label": "near_dup_noise_binary_large",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.6354
+      "similarity_score": 0.5377
     },
     {
       "label": "same_size_different_document_small",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.2878
+      "similarity_score": 0.5338
     },
     {
       "label": "same_size_different_document_medium",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.2172
+      "similarity_score": 0.7262
     },
     {
       "label": "same_size_different_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9893
+      "similarity_score": 0.9824
     },
     {
       "label": "same_size_different_binary_large",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.2127
+      "similarity_score": 0.0
     },
     {
       "label": "reversed_document_small",
@@ -306,7 +306,7 @@
       "label": "reversed_binary_large",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.0733
+      "similarity_score": 0.0
     },
     {
       "label": "shuffled_binary_large",
@@ -324,63 +324,14 @@
       "f1_score": 0.3077
     },
     {
-      "threshold": 0.1,
-      "tpr": 1.0,
-      "fpr": 0.9722,
-      "accuracy": 0.2045,
-      "f1_score": 0.3137
-    },
-    {
-      "threshold": 0.2,
-      "tpr": 1.0,
-      "fpr": 0.9722,
-      "accuracy": 0.2045,
-      "f1_score": 0.3137
-    },
-    {
-      "threshold": 0.3,
-      "tpr": 1.0,
-      "fpr": 0.8333,
-      "accuracy": 0.3182,
-      "f1_score": 0.3478
-    },
-    {
-      "threshold": 0.4,
-      "tpr": 1.0,
-      "fpr": 0.8056,
-      "accuracy": 0.3409,
-      "f1_score": 0.3556
-    },
-    {
       "threshold": 0.5,
       "tpr": 1.0,
-      "fpr": 0.8056,
-      "accuracy": 0.3409,
-      "f1_score": 0.3556
-    },
-    {
-      "threshold": 0.6,
-      "tpr": 1.0,
-      "fpr": 0.8056,
-      "accuracy": 0.3409,
-      "f1_score": 0.3556
-    },
-    {
-      "threshold": 0.7,
-      "tpr": 1.0,
-      "fpr": 0.7778,
-      "accuracy": 0.3636,
-      "f1_score": 0.3636
+      "fpr": 0.9167,
+      "accuracy": 0.25,
+      "f1_score": 0.3265
     },
     {
       "threshold": 0.75,
-      "tpr": 1.0,
-      "fpr": 0.7778,
-      "accuracy": 0.3636,
-      "f1_score": 0.3636
-    },
-    {
-      "threshold": 0.8,
       "tpr": 1.0,
       "fpr": 0.7778,
       "accuracy": 0.3636,
@@ -394,25 +345,11 @@
       "f1_score": 0.3636
     },
     {
-      "threshold": 0.9,
-      "tpr": 1.0,
-      "fpr": 0.6944,
-      "accuracy": 0.4318,
-      "f1_score": 0.3902
-    },
-    {
       "threshold": 0.95,
       "tpr": 1.0,
-      "fpr": 0.6944,
-      "accuracy": 0.4318,
-      "f1_score": 0.3902
-    },
-    {
-      "threshold": 0.99,
-      "tpr": 1.0,
-      "fpr": 0.5278,
-      "accuracy": 0.5682,
-      "f1_score": 0.4571
+      "fpr": 0.7222,
+      "accuracy": 0.4091,
+      "f1_score": 0.381
     },
     {
       "threshold": 1.0,
@@ -422,7 +359,7 @@
       "f1_score": 0.4615
     }
   ],
-  "auc": 0.7968,
+  "auc": 0.7361,
   "baseline_comparison": {
     "random_classifier": {
       "method": "Random Classifier (50/50)",
@@ -448,7 +385,7 @@
   },
   "overall_verdict": {
     "test_result": "FAIL",
-    "auc_score": 0.7968,
+    "auc_score": 0.7361,
     "best_threshold": 1.0
   }
 }

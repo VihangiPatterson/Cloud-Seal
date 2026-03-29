@@ -10,12 +10,6 @@ from cryptography.hazmat.backends import default_backend
 def generate_content_hash(file_content: bytes) -> str:
     """
     Generates SHA-256 hash of file content (for CID generation)
-    
-    Args:
-        file_content: Raw file bytes
-    
-    Returns:
-        Hex string hash (64 characters)
     """
     return hashlib.sha256(file_content).hexdigest()
 
@@ -24,14 +18,6 @@ def generate_convergent_key(file_content: bytes, tenant_id: str = "", tenant_sec
     """
     Generates deterministic encryption key from file content
     Adds tenant-specific salt for privacy
-    
-    Args:
-        file_content: Raw file bytes
-        tenant_id: Tenant identifier
-        tenant_secret: Tenant-specific secret
-    
-    Returns:
-        32-byte AES key
     """
     # Add tenant-specific prefix for privacy
     combined = f"{tenant_id}:{tenant_secret}".encode() + file_content
@@ -42,13 +28,6 @@ def generate_convergent_key(file_content: bytes, tenant_id: str = "", tenant_sec
 def encrypt_file(file_content: bytes, key: bytes) -> bytes:
     """
     Encrypts file using AES-256 in CBC mode
-    
-    Args:
-        file_content: Raw file bytes
-        key: 32-byte encryption key
-    
-    Returns:
-        Encrypted bytes (IV + ciphertext)
     """
     # Generate random IV
     iv = os.urandom(16)
@@ -75,13 +54,6 @@ def encrypt_file(file_content: bytes, key: bytes) -> bytes:
 def decrypt_file(encrypted_content: bytes, key: bytes) -> bytes:
     """
     Decrypts file using AES-256
-    
-    Args:
-        encrypted_content: IV + ciphertext
-        key: 32-byte encryption key
-    
-    Returns:
-        Original file bytes
     """
     # Extract IV from first 16 bytes
     iv = encrypted_content[:16]

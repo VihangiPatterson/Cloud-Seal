@@ -157,13 +157,13 @@ def main():
     
     # List of test scripts to run
     test_scripts = [
-        "test_deduplication_efficiency.py",
-        "test_bloom_filter_accuracy.py",
-        "test_multitenant_safety.py",
-        "test_blockchain_integrity.py",
-        "test_ai_evaluation.py",
-        "test_performance_benchmarks.py",
-        "test_security_threat_model.py"
+        "tests/test_deduplication_efficiency.py",
+        "tests/test_bloom_filter_accuracy.py",
+        "tests/test_multitenant_safety.py",
+        "tests/test_blockchain_integrity.py",
+        "tests/test_ai_evaluation.py",
+        "tests/test_performance_benchmarks.py",
+        "tests/test_security_threat_model.py"
     ]
     
     results = {}

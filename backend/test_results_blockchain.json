@@ -1,0 +1,51 @@
+{
+  "test_name": "Blockchain Integrity and Tamper Detection",
+  "tests": [
+    {
+      "test": "Block Creation Performance",
+      "blocks_created": 100,
+      "avg_creation_time_ms": 0.88,
+      "status": "PASS"
+    },
+    {
+      "test": "Chain Validation",
+      "chain_length": 101,
+      "validation_time_ms": 0.36,
+      "is_valid": true,
+      "status": "PASS"
+    },
+    {
+      "test": "Tamper Detection",
+      "tamper_detected": true,
+      "chain_restored": true,
+      "status": "PASS"
+    },
+    {
+      "test": "Transaction Throughput",
+      "transactions_attempted": 1000,
+      "transactions_accepted": 1000,
+      "time_seconds": 0.02,
+      "throughput_tx_per_sec": 50436.6,
+      "status": "PASS"
+    },
+    {
+      "test": "Storage Overhead",
+      "file_size_kb": 55.19,
+      "num_blocks": 101,
+      "bytes_per_block": 559.6,
+      "status": "PASS"
+    }
+  ],
+  "blockchain_stats": {
+    "node_id": "test_node",
+    "is_validator": true,
+    "chain_length": 101,
+    "pending_transactions": 1000,
+    "total_transactions": 101,
+    "authorized_validators": [
+      "test_node"
+    ],
+    "chain_valid": true
+  },
+  "overall_verdict": "PASS"
+}

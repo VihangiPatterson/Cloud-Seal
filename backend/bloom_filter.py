@@ -13,11 +13,7 @@ class BloomFilter:
     def __init__(self, expected_items: int = 10000, false_positive_rate: float = 0.01):
         """
         Initialize Bloom filter
-        
-        Args:
-            expected_items: Number of files expected to store
-            false_positive_rate: Target error rate (e.g., 0.01 = 1%)
-        """
+    """
         self.expected_items = expected_items
         self.fp_rate = false_positive_rate
         
@@ -37,14 +33,7 @@ class BloomFilter:
         """
         Calculate optimal bit array size
         Formula: m = -(n * ln(p)) / (ln(2)^2)
-        
-        Args:
-            n: Expected number of items
-            p: Desired false positive rate
-            
-        Returns:
-            Optimal size in bits
-        """
+    """
         m = -(n * math.log(p)) / (math.log(2) ** 2)
         return int(m)
     
@@ -52,24 +41,14 @@ class BloomFilter:
         """
         Calculate optimal number of hash functions
         Formula: k = (m/n) * ln(2)
-        
-        Args:
-            m: Size of bit array
-            n: Expected number of items
-            
-        Returns:
-            Optimal number of hash functions
-        """
+    """
         k = (m / n) * math.log(2)
         return max(1, int(k))
     
     def add(self, item: str) -> None:
         """
         Add item to Bloom filter
-        
-        Args:
-            item: String to add (usually file hash)
-        """
+    """
         for i in range(self.hash_count):
             # Generate hash using seed i
             hash_value = mmh3.hash(item, i) % self.size
@@ -80,14 +59,7 @@ class BloomFilter:
     def check(self, item: str) -> bool:
         """
         Check if item might be in set
-        
-        Args:
-            item: String to check
-            
-        Returns:
-            False = definitely NOT in set
-            True = MAYBE in set (need to verify)
-        """
+    """
         for i in range(self.hash_count):
             hash_value = mmh3.hash(item, i) % self.size
             if self.bit_array[hash_value] == 0:
@@ -98,10 +70,7 @@ class BloomFilter:
     def get_stats(self) -> dict:
         """
         Get Bloom filter statistics
-        
-        Returns:
-            Dictionary with size, hash count, fill rate
-        """
+    """
         fill_rate = sum(self.bit_array) / self.size
         return {
             'size_bits': self.size,

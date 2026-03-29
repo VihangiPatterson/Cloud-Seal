@@ -19,7 +19,7 @@
         {
           "test": "Ciphertext hashes differ across tenants",
           "passed": true,
-          "detail": "Attacker hash: b2c2e7a1a92cc2d2... | Victim hash: bfb6200375f0ccfd..."
+          "detail": "Attacker hash: 0e983dca97d86881... | Victim hash: 5cb02b743a76cf86..."
         },
         {
           "test": "Wrong tenant secret produces wrong key",

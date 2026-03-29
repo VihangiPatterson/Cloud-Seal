@@ -30,13 +30,7 @@ class IPFSManager:
     def add_bytes(self, content: bytes) -> str:
         """
         Adds content to IPFS and returns CID
-        
-        Args:
-            content: File bytes
-        
-        Returns:
-            Content Identifier (CID)
-        """
+    """
         # Generate CID (simulated - real IPFS uses multihash)
         cid = "Qm" + hashlib.sha256(content).hexdigest()[:46]
         
@@ -51,13 +45,7 @@ class IPFSManager:
     def get_bytes(self, cid: str) -> Optional[bytes]:
         """
         Retrieves content from IPFS
-        
-        Args:
-            cid: Content Identifier
-        
-        Returns:
-            File bytes or None if not found
-        """
+    """
         file_path = self.storage_dir / cid
         if not file_path.exists():
             return None
@@ -71,11 +59,7 @@ class IPFSManager:
     def pin_file(self, cid: str, metadata: dict = None):
         """
         Pins file to prevent garbage collection
-        
-        Args:
-            cid: Content Identifier
-            metadata: Additional file metadata
-        """
+    """
         self.pinned_files[cid] = {
             'pinned': True,
             'metadata': metadata or {}
@@ -86,10 +70,7 @@ class IPFSManager:
     def unpin_file(self, cid: str):
         """
         Unpins file (allows garbage collection)
-        
-        Args:
-            cid: Content Identifier
-        """
+    """
         if cid in self.pinned_files:
             del self.pinned_files[cid]
             self._save_pins()

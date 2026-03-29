@@ -65,7 +65,7 @@ def test_bloom_filter_accuracy():
     
     print(f"True Positives:     {true_positives} / {len(known_items)} ({tp_rate:.1f}%)")
     print(f"Avg Query Time:     {avg_query_time:.3f} ms")
-    print(f"Status:             {'✅ PASS' if tp_rate == 100 else '❌ FAIL'}")
+    print(f"Status:             {' PASS' if tp_rate == 100 else ' FAIL'}")
     
     # Test 3: False Positives
     print(f"\n{'='*60}")
@@ -83,7 +83,7 @@ def test_bloom_filter_accuracy():
     
     print(f"False Positives:    {false_positives} / {len(unknown_items)} ({fp_rate:.2f}%)")
     print(f"Target FP Rate:     {target_fp_rate * 100}%")
-    print(f"Status:             {'✅ PASS' if fp_rate <= target_fp_rate * 100 else '❌ FAIL'}")
+    print(f"Status:             {' PASS' if fp_rate <= target_fp_rate * 100 else 'FAIL'}")
     
     # Test 4: Memory Efficiency
     print(f"\n{'='*60}")
@@ -133,7 +133,7 @@ def test_bloom_filter_accuracy():
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     
-    print(f"\n✅ Results saved to: {output_file}")
+    print(f"\n Results saved to: {output_file}")
     
     # Print table for paper
     print(f"\n{'='*60}")
@@ -154,8 +154,8 @@ def test_bloom_filter_accuracy():
 if __name__ == "__main__":
     try:
         results = test_bloom_filter_accuracy()
-        print("\n✅ Test completed successfully!")
+        print("\n Test completed successfully!")
     except Exception as e:
-        print(f"\n❌ Test failed: {str(e)}")
+        print(f"\n Test failed: {str(e)}")
         import traceback
         traceback.print_exc()

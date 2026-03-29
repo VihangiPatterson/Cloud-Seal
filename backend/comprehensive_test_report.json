@@ -1,0 +1,180 @@
+{
+  "generated_at": "2026-03-29T01:29:46.427874",
+  "test_results": {
+    "deduplication": [
+      {
+        "scenario": "20% Duplicates",
+        "total_files": 100,
+        "unique_files": 80,
+        "duplicates": 20,
+        "storage_reduction_pct": 20.0,
+        "avg_response_time_ms": 0.0,
+        "accuracy": "PASS"
+      },
+      {
+        "scenario": "40% Duplicates",
+        "total_files": 100,
+        "unique_files": 60,
+        "duplicates": 40,
+        "storage_reduction_pct": 40.0,
+        "avg_response_time_ms": 0.0,
+        "accuracy": "PASS"
+      },
+      {
+        "scenario": "60% Duplicates",
+        "total_files": 100,
+        "unique_files": 40,
+        "duplicates": 60,
+        "storage_reduction_pct": 60.0,
+        "avg_response_time_ms": 0.0,
+        "accuracy": "PASS"
+      },
+      {
+        "scenario": "80% Duplicates",
+        "total_files": 100,
+        "unique_files": 20,
+        "duplicates": 80,
+        "storage_reduction_pct": 80.0,
+        "avg_response_time_ms": 0.0,
+        "accuracy": "PASS"
+      }
+    ],
+    "bloom_filter": {
+      "configuration": {
+        "bit_array_size_bits": 95850,
+        "bit_array_size_kb": 11.7,
+        "hash_functions": 6,
+        "target_fp_rate_pct": 1.0
+      },
+      "performance": {
+        "items_tested": 1000,
+        "true_positives": 1000,
+        "true_positive_rate_pct": 100.0,
+        "false_positives": 0,
+        "false_positive_rate_pct": 0.0,
+        "avg_query_time_ms": 0.001,
+        "bytes_per_item": 11.98
+      },
+      "verdict": {
+        "true_positive_test": "PASS",
+        "false_positive_test": "PASS"
+      }
+    },
+    "multitenant": {
+      "test_scenario": "Sequential upload and deletion by 3 tenants",
+      "test_file_size": 5100,
+      "phases": [
+        {
+          "phase": "Upload_Tenant_A",
+          "tenant": "Tenant_A",
+          "status": "stored",
+          "deduplicated": false,
+          "ref_count": 1,
+          "test_passed": true
+        },
+        {
+          "phase": "Upload_Tenant_B",
+          "tenant": "Tenant_B",
+          "status": "linked",
+          "deduplicated": true,
+          "ref_count": 2,
+          "test_passed": true
+        },
+        {
+          "phase": "Upload_Tenant_C",
+          "tenant": "Tenant_C",
+          "status": "linked",
+          "deduplicated": true,
+          "ref_count": 3,
+          "test_passed": true
+        },
+        {
+          "phase": "Delete_Tenant_A",
+          "tenant": "Tenant_A",
+          "remaining_refs": 2,
+          "physically_deleted": false,
+          "test_passed": true
+        },
+        {
+          "phase": "Delete_Tenant_B",
+          "tenant": "Tenant_B",
+          "remaining_refs": 1,
+          "physically_deleted": false,
+          "test_passed": true
+        },
+        {
+          "phase": "Delete_Tenant_C",
+          "tenant": "Tenant_C",
+          "remaining_refs": 0,
+          "physically_deleted": true,
+          "test_passed": true
+        }
+      ],
+      "final_verification": {
+        "file_exists_in_system": false,
+        "expected": false,
+        "test_passed": true
+      },
+      "overall_verdict": {
+        "all_phases_passed": true,
+        "final_verification_passed": true,
+        "test_result": "PASS"
+      }
+    },
+    "blockchain": {
+      "test_name": "Blockchain Integrity and Tamper Detection",
+      "tests": [
+        {
+          "test": "Block Creation Performance",
+          "blocks_created": 100,
+          "avg_creation_time_ms": 0.88,
+          "status": "PASS"
+        },
+        {
+          "test": "Chain Validation",
+          "chain_length": 101,
+          "validation_time_ms": 0.36,
+          "is_valid": true,
+          "status": "PASS"
+        },
+        {
+          "test": "Tamper Detection",
+          "tamper_detected": true,
+          "chain_restored": true,
+          "status": "PASS"
+        },
+        {
+          "test": "Transaction Throughput",
+          "transactions_attempted": 1000,
+          "transactions_accepted": 1000,
+          "time_seconds": 0.02,
+          "throughput_tx_per_sec": 50436.6,
+          "status": "PASS"
+        },
+        {
+          "test": "Storage Overhead",
+          "file_size_kb": 55.19,
+          "num_blocks": 101,
+          "bytes_per_block": 559.6,
+          "status": "PASS"
+        }
+      ],
+      "blockchain_stats": {
+        "node_id": "test_node",
+        "is_validator": true,
+        "chain_length": 101,
+        "pending_transactions": 1000,
+        "total_transactions": 101,
+        "authorized_validators": [
+          "test_node"
+        ],
+        "chain_valid": true
+      },
+      "overall_verdict": "PASS"
+    }
+  },
+  "summary": {
+    "total_tests_run": 4,
+    "all_tests_passed": false
+  }
+}

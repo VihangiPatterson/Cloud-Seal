@@ -1,0 +1,38 @@
+[
+  {
+    "scenario": "20% Duplicates",
+    "total_files": 100,
+    "unique_files": 80,
+    "duplicates": 20,
+    "storage_reduction_pct": 20.0,
+    "avg_response_time_ms": 0.0,
+    "accuracy": "PASS"
+  },
+  {
+    "scenario": "40% Duplicates",
+    "total_files": 100,
+    "unique_files": 60,
+    "duplicates": 40,
+    "storage_reduction_pct": 40.0,
+    "avg_response_time_ms": 0.0,
+    "accuracy": "PASS"
+  },
+  {
+    "scenario": "60% Duplicates",
+    "total_files": 100,
+    "unique_files": 40,
+    "duplicates": 60,
+    "storage_reduction_pct": 60.0,
+    "avg_response_time_ms": 0.0,
+    "accuracy": "PASS"
+  },
+  {
+    "scenario": "80% Duplicates",
+    "total_files": 100,
+    "unique_files": 20,
+    "duplicates": 80,
+    "storage_reduction_pct": 80.0,
+    "avg_response_time_ms": 0.0,
+    "accuracy": "PASS"
+  }
+]

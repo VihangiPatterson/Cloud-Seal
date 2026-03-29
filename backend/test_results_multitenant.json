@@ -1,0 +1,61 @@
+{
+  "test_scenario": "Sequential upload and deletion by 3 tenants",
+  "test_file_size": 5100,
+  "phases": [
+    {
+      "phase": "Upload_Tenant_A",
+      "tenant": "Tenant_A",
+      "status": "stored",
+      "deduplicated": false,
+      "ref_count": 1,
+      "test_passed": true
+    },
+    {
+      "phase": "Upload_Tenant_B",
+      "tenant": "Tenant_B",
+      "status": "linked",
+      "deduplicated": true,
+      "ref_count": 2,
+      "test_passed": true
+    },
+    {
+      "phase": "Upload_Tenant_C",
+      "tenant": "Tenant_C",
+      "status": "linked",
+      "deduplicated": true,
+      "ref_count": 3,
+      "test_passed": true
+    },
+    {
+      "phase": "Delete_Tenant_A",
+      "tenant": "Tenant_A",
+      "remaining_refs": 2,
+      "physically_deleted": false,
+      "test_passed": true
+    },
+    {
+      "phase": "Delete_Tenant_B",
+      "tenant": "Tenant_B",
+      "remaining_refs": 1,
+      "physically_deleted": false,
+      "test_passed": true
+    },
+    {
+      "phase": "Delete_Tenant_C",
+      "tenant": "Tenant_C",
+      "remaining_refs": 0,
+      "physically_deleted": true,
+      "test_passed": true
+    }
+  ],
+  "final_verification": {
+    "file_exists_in_system": false,
+    "expected": false,
+    "test_passed": true
+  },
+  "overall_verdict": {
+    "all_phases_passed": true,
+    "final_verification_passed": true,
+    "test_result": "PASS"
+  }
+}

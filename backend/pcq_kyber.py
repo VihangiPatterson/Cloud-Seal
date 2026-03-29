@@ -28,10 +28,7 @@ class SimulatedKyber:
     def __init__(self, security_level: int = 768):
         """
         Initialize Kyber KEM
-        
-        Args:
-            security_level: 512, 768, or 1024 (higher = more secure)
-        """
+    """
         self.security_level = security_level
         self.pk_size = security_level + 32  # Public key size
         self.sk_size = security_level * 2   # Secret key size
@@ -41,10 +38,7 @@ class SimulatedKyber:
     def keypair(self) -> Tuple[bytes, bytes]:
         """
         Generate Kyber keypair
-        
-        Returns:
-            (public_key, secret_key)
-        """
+    """
         # In real Kyber: lattice-based key generation
         # Here: simulated with secure random bytes
         
@@ -63,13 +57,7 @@ class SimulatedKyber:
     def encapsulate(self, public_key: bytes) -> Tuple[bytes, bytes]:
         """
         Encapsulate a shared secret using recipient's public key
-        
-        Args:
-            public_key: Recipient's Kyber public key
-        
-        Returns:
-            (ciphertext, shared_secret)
-        """
+    """
         # Generate ephemeral randomness
         randomness = secrets.token_bytes(32)
         
@@ -93,14 +81,7 @@ class SimulatedKyber:
     def decapsulate(self, secret_key: bytes, ciphertext: bytes) -> bytes:
         """
         Decapsulate shared secret using secret key
-        
-        Args:
-            secret_key: Recipient's Kyber secret key
-            ciphertext: Encapsulated key material
-        
-        Returns:
-            shared_secret
-        """
+    """
         # In real Kyber: lattice-based decryption
         # randomness = Decrypt(sk, ciphertext)
         
@@ -130,10 +111,7 @@ class PQCKeyManager:
     def generate_tenant_keys(self, tenant_id: str) -> Tuple[bytes, bytes]:
         """
         Generate PQC keypair for tenant
-        
-        Returns:
-            (public_key, secret_key)
-        """
+    """
         pk, sk = self.kyber.keypair()
         
         # Store keys
@@ -171,10 +149,7 @@ class PQCKeyManager:
     ) -> Tuple[bytes, bytes]:
         """
         Establish quantum-resistant shared key between tenants
-        
-        Returns:
-            (ciphertext_for_receiver, shared_key)
-        """
+    """
         # Get receiver's public key
         receiver_pk = self.get_tenant_public_key(receiver_id)
         
@@ -193,14 +168,7 @@ class PQCKeyManager:
         """
         Derive file encryption key using hybrid approach
         Combines: tenant's PQC key + file hash
-        
-        Args:
-            tenant_id: Tenant identifier
-            file_hash: SHA-256 hash of file content
-        
-        Returns:
-            32-byte AES encryption key
-        """
+    """
         # Get tenant's secret key
         sk = self.get_tenant_secret_key(tenant_id)
         
@@ -259,10 +227,7 @@ class HybridEncryption:
     ) -> Tuple[bytes, dict]:
         """
         Encrypt file using hybrid approach
-        
-        Returns:
-            (encrypted_file, metadata)
-        """
+    """
         from encryption import encrypt_file, generate_content_hash
         
         # Generate content hash
@@ -293,10 +258,7 @@ class HybridEncryption:
     ) -> bytes:
         """
         Share file access using quantum-resistant key exchange
-        
-        Returns:
-            Encapsulated key for receiver
-        """
+    """
         # Establish shared key using Kyber
         ciphertext, shared_key = self.pqc_manager.establish_shared_key(
             sender_id, receiver_id

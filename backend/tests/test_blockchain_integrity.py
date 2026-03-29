@@ -4,9 +4,9 @@ Tests immutable audit trail and tamper detection
 """
 import sys
 sys.path.append('.')
-
-from blockchain_ditributed import DistributedBlockchain
 from pathlib import Path
+
+from blockchain_distributed import DistributedBlockchain
 import time
 import json
 
@@ -161,7 +161,7 @@ def test_blockchain_integrity():
     
     # Verify all transactions were accepted
     if successful_tx != num_transactions:
-        print(f"⚠️  WARNING: {num_transactions - successful_tx} transactions were rejected!")
+        print(f" WARNING: {num_transactions - successful_tx} transactions were rejected!")
     
     results["tests"].append({
         "test": "Transaction Throughput",
@@ -210,7 +210,7 @@ def test_blockchain_integrity():
     print(f"\n{'='*60}")
     print("OVERALL VERDICT")
     print(f"{'='*60}")
-    print(f"All tests passed: {'✅ PASS' if all_passed else '❌ FAIL'}")
+    print(f"All tests passed: {' PASS' if all_passed else ' FAIL'}")
     
     results["overall_verdict"] = "PASS" if all_passed else "FAIL"
     
@@ -219,7 +219,7 @@ def test_blockchain_integrity():
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     
-    print(f"\n✅ Results saved to: {output_file}")
+    print(f"\n Results saved to: {output_file}")
     
     # Print table for paper
     print(f"\n{'='*60}")
@@ -239,8 +239,8 @@ def test_blockchain_integrity():
 if __name__ == "__main__":
     try:
         results = test_blockchain_integrity()
-        print("\n✅ Test completed successfully!")
+        print("\n Test completed successfully!")
     except Exception as e:
-        print(f"\n❌ Test failed: {str(e)}")
+        print(f"\n Test failed: {str(e)}")
         import traceback
         traceback.print_exc()

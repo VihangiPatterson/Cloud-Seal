@@ -354,15 +354,7 @@ class AIDeduplicationEngine:
     ) -> Tuple[bool, float]:
         """
         Check if two encrypted files are likely duplicates
-        
-        Args:
-            file1: First file content (encrypted)
-            file2: Second file content (encrypted)
-            threshold: Similarity threshold (0.85 = 85% similar)
-        
-        Returns:
-            (is_duplicate, similarity_score)
-        """
+    """
         # Encode files
         vec1 = self.encoder.encode_file(file1)
         vec2 = self.encoder.encode_file(file2)
@@ -382,13 +374,7 @@ class AIDeduplicationEngine:
     ):
         """
         Train model on labeled file pairs
-        
-        Args:
-            file_pairs: List of (file1, file2, is_duplicate) tuples
-            epochs: Number of training epochs
-            learning_rate: Learning rate for gradient descent
-            margin: Contrastive loss margin for dissimilar pairs
-        """
+    """
         print(f"Preparing training data from {len(file_pairs)} pairs...")
         
         # Encode all files and build pair list

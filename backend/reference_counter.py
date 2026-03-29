@@ -27,14 +27,7 @@ class ReferenceCounter:
 
         """
         Adds tenant as file owner
-        
-        Args:
-            cid: Content Identifier (file hash)
-            tenant_id: Tenant identifier
-        
-        Returns:
-            'NEW' if first upload, 'DUPLICATE' if file exists
-        """
+    """
         if cid not in self.ref_counts:
                 self.ref_counts[cid] = 1
                 self.owners[cid] = [tenant_id]
@@ -53,18 +46,7 @@ class ReferenceCounter:
     def remove_reference(self, cid: str, tenant_id: str) -> Tuple[int, bool]:
         """
         Removes tenant as file owner
-        
-        Args:
-            cid: Content Identifier
-            tenant_id: Tenant identifier
-        
-        Returns:
-            (remaining_count, should_delete)
-        
-        Raises:
-            ValueError: If CID not found
-            PermissionError: If tenant is not owner
-        """
+    """
         if cid not in self.owners:
             raise ValueError(f"CID {cid} not found in reference counter")
         

@@ -1,0 +1,21 @@
+{
+  "configuration": {
+    "bit_array_size_bits": 95850,
+    "bit_array_size_kb": 11.7,
+    "hash_functions": 6,
+    "target_fp_rate_pct": 1.0
+  },
+  "performance": {
+    "items_tested": 1000,
+    "true_positives": 1000,
+    "true_positive_rate_pct": 100.0,
+    "false_positives": 0,
+    "false_positive_rate_pct": 0.0,
+    "avg_query_time_ms": 0.001,
+    "bytes_per_item": 11.98
+  },
+  "verdict": {
+    "true_positive_test": "PASS",
+    "false_positive_test": "PASS"
+  }
+}
