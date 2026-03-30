@@ -46,6 +46,13 @@ cloud-seal-poc/
 
 ---
 
+## 🌐 Live Demo
+
+The project is fully hosted and deployed on WSO2 Choreo. You can access the live Cloud Seal Dashboard directly here:
+**[https://75b19bed-57d0-4181-a5bd-6c6657f1acc6-dev.e1-eu-north-azure.choreoapis.dev/cloud-seal/cloud-seal/v1.0/](https://75b19bed-57d0-4181-a5bd-6c6657f1acc6-dev.e1-eu-north-azure.choreoapis.dev/cloud-seal/cloud-seal/v1.0/)**
+
+---
+
 ## 🚀 Quick Start / Local Deployment
 
 ### 1. Prerequisites
