@@ -56,7 +56,7 @@ The project is fully hosted and deployed on WSO2 Choreo. You can access the live
 ## 🚀 Quick Start / Local Deployment
 
 ### 1. Prerequisites
-* Python 3.10 or higher
+* Python 3.11 or higher
 * Recommended: Virtual Environment (`venv`)
 
 ### 2. Installation

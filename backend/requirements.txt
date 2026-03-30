@@ -1,4 +1,5 @@
 # Enhanced Cloud Seal Requirements
+# Python Version: 3.11.x
 
 # Core Web Framework
 fastapi==0.104.1
