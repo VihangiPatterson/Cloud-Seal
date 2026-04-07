@@ -5,7 +5,7 @@
       "file_size_bytes": 1024,
       "key_generation": {
         "min_ms": 0.001,
-        "max_ms": 0.021,
+        "max_ms": 0.025,
         "avg_ms": 0.002,
         "median_ms": 0.001,
         "iterations": 20
@@ -18,17 +18,17 @@
         "iterations": 20
       },
       "encryption": {
-        "min_ms": 0.036,
-        "max_ms": 34.939,
-        "avg_ms": 3.539,
-        "median_ms": 0.049,
+        "min_ms": 0.016,
+        "max_ms": 39.192,
+        "avg_ms": 3.939,
+        "median_ms": 0.02,
         "iterations": 10
       },
       "decryption": {
-        "min_ms": 0.03,
-        "max_ms": 0.042,
-        "avg_ms": 0.033,
-        "median_ms": 0.032,
+        "min_ms": 0.01,
+        "max_ms": 0.017,
+        "avg_ms": 0.012,
+        "median_ms": 0.012,
         "iterations": 10
       },
       "encrypted_size_bytes": 1056,
@@ -38,31 +38,31 @@
       "file_size": "10 KB",
       "file_size_bytes": 10240,
       "key_generation": {
-        "min_ms": 0.007,
-        "max_ms": 0.042,
-        "avg_ms": 0.01,
-        "median_ms": 0.008,
+        "min_ms": 0.005,
+        "max_ms": 0.012,
+        "avg_ms": 0.005,
+        "median_ms": 0.005,
         "iterations": 20
       },
       "content_hash": {
-        "min_ms": 0.007,
-        "max_ms": 0.008,
-        "avg_ms": 0.007,
-        "median_ms": 0.007,
+        "min_ms": 0.005,
+        "max_ms": 0.005,
+        "avg_ms": 0.005,
+        "median_ms": 0.005,
         "iterations": 20
       },
       "encryption": {
-        "min_ms": 0.046,
-        "max_ms": 0.098,
-        "avg_ms": 0.059,
-        "median_ms": 0.052,
+        "min_ms": 0.022,
+        "max_ms": 0.028,
+        "avg_ms": 0.024,
+        "median_ms": 0.023,
         "iterations": 10
       },
       "decryption": {
-        "min_ms": 0.034,
-        "max_ms": 0.267,
-        "avg_ms": 0.059,
-        "median_ms": 0.036,
+        "min_ms": 0.013,
+        "max_ms": 0.194,
+        "avg_ms": 0.034,
+        "median_ms": 0.013,
         "iterations": 10
       },
       "encrypted_size_bytes": 10272,
@@ -72,31 +72,31 @@
       "file_size": "100 KB",
       "file_size_bytes": 102400,
       "key_generation": {
-        "min_ms": 0.065,
-        "max_ms": 0.086,
-        "avg_ms": 0.067,
-        "median_ms": 0.065,
+        "min_ms": 0.046,
+        "max_ms": 0.189,
+        "avg_ms": 0.068,
+        "median_ms": 0.066,
         "iterations": 20
       },
       "content_hash": {
         "min_ms": 0.058,
-        "max_ms": 0.089,
-        "avg_ms": 0.061,
+        "max_ms": 0.062,
+        "avg_ms": 0.06,
         "median_ms": 0.059,
         "iterations": 20
       },
       "encryption": {
-        "min_ms": 0.167,
-        "max_ms": 0.327,
-        "avg_ms": 0.194,
-        "median_ms": 0.174,
+        "min_ms": 0.109,
+        "max_ms": 0.277,
+        "avg_ms": 0.15,
+        "median_ms": 0.112,
         "iterations": 10
       },
       "decryption": {
-        "min_ms": 0.086,
-        "max_ms": 1.76,
-        "avg_ms": 0.368,
-        "median_ms": 0.102,
+        "min_ms": 0.036,
+        "max_ms": 0.048,
+        "avg_ms": 0.038,
+        "median_ms": 0.037,
         "iterations": 10
       },
       "encrypted_size_bytes": 102432,
@@ -107,30 +107,30 @@
       "file_size_bytes": 1048576,
       "key_generation": {
         "min_ms": 0.444,
-        "max_ms": 0.523,
-        "avg_ms": 0.451,
-        "median_ms": 0.446,
+        "max_ms": 5.281,
+        "avg_ms": 0.939,
+        "median_ms": 0.655,
         "iterations": 20
       },
       "content_hash": {
         "min_ms": 0.425,
-        "max_ms": 0.485,
-        "avg_ms": 0.434,
-        "median_ms": 0.425,
+        "max_ms": 2.614,
+        "avg_ms": 0.613,
+        "median_ms": 0.429,
         "iterations": 20
       },
       "encryption": {
-        "min_ms": 1.001,
-        "max_ms": 1.281,
-        "avg_ms": 1.054,
-        "median_ms": 1.022,
+        "min_ms": 0.99,
+        "max_ms": 3.853,
+        "avg_ms": 1.646,
+        "median_ms": 1.116,
         "iterations": 10
       },
       "decryption": {
-        "min_ms": 0.242,
-        "max_ms": 0.537,
-        "avg_ms": 0.31,
-        "median_ms": 0.261,
+        "min_ms": 0.526,
+        "max_ms": 0.908,
+        "avg_ms": 0.614,
+        "median_ms": 0.551,
         "iterations": 10
       },
       "encrypted_size_bytes": 1048608,
@@ -140,31 +140,31 @@
       "file_size": "10 MB",
       "file_size_bytes": 10485760,
       "key_generation": {
-        "min_ms": 4.175,
-        "max_ms": 5.552,
-        "avg_ms": 4.319,
-        "median_ms": 4.208,
+        "min_ms": 4.478,
+        "max_ms": 6.251,
+        "avg_ms": 4.789,
+        "median_ms": 4.651,
         "iterations": 20
       },
       "content_hash": {
-        "min_ms": 3.994,
-        "max_ms": 4.156,
-        "avg_ms": 4.068,
-        "median_ms": 4.06,
+        "min_ms": 4.042,
+        "max_ms": 4.532,
+        "avg_ms": 4.315,
+        "median_ms": 4.342,
         "iterations": 20
       },
       "encryption": {
-        "min_ms": 9.432,
-        "max_ms": 14.223,
-        "avg_ms": 10.348,
-        "median_ms": 9.964,
+        "min_ms": 9.885,
+        "max_ms": 13.87,
+        "avg_ms": 10.826,
+        "median_ms": 10.416,
         "iterations": 10
       },
       "decryption": {
-        "min_ms": 2.505,
-        "max_ms": 3.473,
-        "avg_ms": 2.731,
-        "median_ms": 2.653,
+        "min_ms": 2.667,
+        "max_ms": 3.632,
+        "avg_ms": 2.92,
+        "median_ms": 2.798,
         "iterations": 10
       },
       "encrypted_size_bytes": 10485792,
@@ -175,96 +175,96 @@
     {
       "file_size": "1 KB",
       "classical_encryption": {
-        "min_ms": 0.012,
-        "max_ms": 0.051,
+        "min_ms": 0.011,
+        "max_ms": 0.048,
         "avg_ms": 0.017,
         "median_ms": 0.012,
         "iterations": 10
       },
       "pqc_hybrid_encryption": {
-        "min_ms": 0.022,
-        "max_ms": 0.025,
-        "avg_ms": 0.023,
-        "median_ms": 0.023,
+        "min_ms": 0.021,
+        "max_ms": 0.023,
+        "avg_ms": 0.022,
+        "median_ms": 0.022,
         "iterations": 5
       },
-      "pqc_overhead_pct": "35.3%"
+      "pqc_overhead_pct": "29.4%"
     },
     {
       "file_size": "10 KB",
       "classical_encryption": {
-        "min_ms": 0.02,
-        "max_ms": 0.033,
-        "avg_ms": 0.022,
-        "median_ms": 0.021,
+        "min_ms": 0.022,
+        "max_ms": 0.036,
+        "avg_ms": 0.024,
+        "median_ms": 0.022,
         "iterations": 10
       },
       "pqc_hybrid_encryption": {
-        "min_ms": 0.03,
-        "max_ms": 0.04,
-        "avg_ms": 0.034,
-        "median_ms": 0.032,
+        "min_ms": 0.031,
+        "max_ms": 0.039,
+        "avg_ms": 0.035,
+        "median_ms": 0.035,
         "iterations": 5
       },
-      "pqc_overhead_pct": "54.5%"
+      "pqc_overhead_pct": "45.8%"
     },
     {
       "file_size": "100 KB",
       "classical_encryption": {
-        "min_ms": 0.101,
-        "max_ms": 0.113,
-        "avg_ms": 0.104,
-        "median_ms": 0.105,
+        "min_ms": 0.102,
+        "max_ms": 0.124,
+        "avg_ms": 0.106,
+        "median_ms": 0.104,
         "iterations": 10
       },
       "pqc_hybrid_encryption": {
         "min_ms": 0.147,
-        "max_ms": 0.177,
-        "avg_ms": 0.158,
-        "median_ms": 0.155,
+        "max_ms": 0.174,
+        "avg_ms": 0.16,
+        "median_ms": 0.158,
         "iterations": 5
       },
-      "pqc_overhead_pct": "51.9%"
+      "pqc_overhead_pct": "50.9%"
     }
   ],
   "bloom_filter_throughput": [
     {
       "items": 100,
-      "add_per_op_ms": 0.001,
-      "query_per_op_ms": 0.000897,
+      "add_per_op_ms": 0.000988,
+      "query_per_op_ms": 0.001001,
       "memory_kb": 0.12,
       "bytes_per_item": 1.2,
-      "false_positive_rate": 0.0094,
+      "false_positive_rate": 0.0099,
       "hash_functions": 6,
       "bit_array_size": 958
     },
     {
       "items": 1000,
-      "add_per_op_ms": 0.000883,
-      "query_per_op_ms": 0.000861,
+      "add_per_op_ms": 0.000901,
+      "query_per_op_ms": 0.000864,
       "memory_kb": 1.17,
       "bytes_per_item": 1.2,
-      "false_positive_rate": 0.0117,
+      "false_positive_rate": 0.0107,
       "hash_functions": 6,
       "bit_array_size": 9585
     },
     {
       "items": 5000,
-      "add_per_op_ms": 0.00091,
-      "query_per_op_ms": 0.000845,
+      "add_per_op_ms": 0.000867,
+      "query_per_op_ms": 0.000859,
       "memory_kb": 5.85,
       "bytes_per_item": 1.2,
-      "false_positive_rate": 0.0128,
+      "false_positive_rate": 0.0114,
       "hash_functions": 6,
       "bit_array_size": 47925
     },
     {
       "items": 10000,
-      "add_per_op_ms": 0.00088,
-      "query_per_op_ms": 0.000861,
+      "add_per_op_ms": 0.000928,
+      "query_per_op_ms": 0.000898,
       "memory_kb": 11.7,
       "bytes_per_item": 1.2,
-      "false_positive_rate": 0.0101,
+      "false_positive_rate": 0.0104,
       "hash_functions": 6,
       "bit_array_size": 95850
     }
@@ -272,22 +272,22 @@
   "blockchain_operations": {
     "transaction_addition": {
       "total_transactions": 50,
-      "total_time_ms": 0.517,
-      "per_transaction_ms": 0.01
+      "total_time_ms": 0.611,
+      "per_transaction_ms": 0.012
     },
     "block_mining": {
       "transactions_per_block": 50,
-      "mining_time_ms": 0.183
+      "mining_time_ms": 0.238
     },
     "chain_validation": {
       "chain_length": 12,
       "total_transactions": 150,
-      "validation_time_ms": 0.242,
+      "validation_time_ms": 0.252,
       "is_valid": true
     },
     "audit_retrieval": {
       "total_entries": 151,
-      "retrieval_time_ms": 0.13
+      "retrieval_time_ms": 0.198
     }
   },
   "memory_usage": {
@@ -316,39 +316,39 @@
       "file_size_bytes": 1024,
       "hash_ms": 0.002,
       "bloom_check_ms": 0.003,
-      "encryption_ms": 0.069,
-      "blockchain_ms": 0.034,
-      "total_pipeline_ms": 0.108,
+      "encryption_ms": 0.074,
+      "blockchain_ms": 0.035,
+      "total_pipeline_ms": 0.113,
       "meets_5s_requirement": true
     },
     {
       "file_size": "10 KB",
       "file_size_bytes": 10240,
       "hash_ms": 0.006,
-      "bloom_check_ms": 0.0,
-      "encryption_ms": 0.035,
-      "blockchain_ms": 0.025,
-      "total_pipeline_ms": 0.067,
+      "bloom_check_ms": 0.001,
+      "encryption_ms": 0.045,
+      "blockchain_ms": 0.026,
+      "total_pipeline_ms": 0.078,
       "meets_5s_requirement": true
     },
     {
       "file_size": "100 KB",
       "file_size_bytes": 102400,
       "hash_ms": 0.04,
-      "bloom_check_ms": 0.001,
+      "bloom_check_ms": 0.0,
       "encryption_ms": 0.152,
-      "blockchain_ms": 0.023,
-      "total_pipeline_ms": 0.215,
+      "blockchain_ms": 0.024,
+      "total_pipeline_ms": 0.217,
       "meets_5s_requirement": true
     },
     {
       "file_size": "1 MB",
       "file_size_bytes": 1048576,
       "hash_ms": 0.4,
-      "bloom_check_ms": 0.001,
-      "encryption_ms": 1.748,
-      "blockchain_ms": 0.044,
-      "total_pipeline_ms": 2.193,
+      "bloom_check_ms": 0.0,
+      "encryption_ms": 1.739,
+      "blockchain_ms": 0.046,
+      "total_pipeline_ms": 2.185,
       "meets_5s_requirement": true
     }
   ],

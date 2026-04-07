@@ -39,7 +39,7 @@ class BinaryFileEncoder:
         # 2. Byte pair frequencies (sample 256 most common pairs)
         pairs = []
         for i in range(0, len(file_content) - 1, 2):
-            pair_val = (file_content[i] << 8)  file_content[i + 1]
+            pair_val = (file_content[i] << 8) | file_content[i + 1]
             pairs.append(pair_val)
         pair_counts = np.bincount(pairs, minlength=65536)
         top_pairs = np.argsort(pair_counts)[-256:]

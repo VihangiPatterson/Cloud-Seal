@@ -9,7 +9,7 @@
         {
           "test": "Different tenants produce different encryption keys",
           "passed": true,
-          "detail": "Attacker key: d5467104fef37777... | Victim key: d2faa8bdf0a63b2f..."
+          "detail": "Attacker key: d5467104fef37777...  Victim key: d2faa8bdf0a63b2f..."
         },
         {
           "test": "Different tenants produce different ciphertexts",
@@ -19,7 +19,7 @@
         {
           "test": "Ciphertext hashes differ across tenants",
           "passed": true,
-          "detail": "Attacker hash: a613b10b8139db7b... | Victim hash: 8651548f5cfde987..."
+          "detail": "Attacker hash: 799251a74279150d...  Victim hash: 3f7e6889b3573919..."
         },
         {
           "test": "Wrong tenant secret produces wrong key",
@@ -50,7 +50,7 @@
         {
           "test": "Encryption keys are tenant-specific",
           "passed": true,
-          "detail": "Key A: 26616c1244773f14... | Key B: f89c7bb0b42cbf91..."
+          "detail": "Key A: 26616c1244773f14...  Key B: f89c7bb0b42cbf91..."
         },
         {
           "test": "Tenant can decrypt their own file",

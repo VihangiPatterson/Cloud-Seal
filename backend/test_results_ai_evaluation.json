@@ -12,7 +12,7 @@
     "learning_rate": 0.01,
     "margin": 0.4,
     "loss_function": "Contrastive Loss (squared)",
-    "training_time_seconds": 5.99
+    "training_time_seconds": 5.75
   },
   "dataset": {
     "total_pairs": 44,
@@ -78,73 +78,73 @@
       "label": "encrypted_same_key_document_small",
       "ground_truth": true,
       "predicted": true,
-      "similarity_score": 0.9871
+      "similarity_score": 0.9979
     },
     {
       "label": "encrypted_same_key_document_medium",
       "ground_truth": true,
       "predicted": true,
-      "similarity_score": 0.9981
+      "similarity_score": 0.9998
     },
     {
       "label": "encrypted_same_key_image_like",
       "ground_truth": true,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 0.9997
     },
     {
       "label": "encrypted_same_key_binary_large",
       "ground_truth": true,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 0.9997
     },
     {
       "label": "completely_different_document_small",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.2019
+      "similarity_score": 0.4562
     },
     {
       "label": "completely_different_document_medium",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.1281
+      "similarity_score": 0.0
     },
     {
       "label": "completely_different_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9888
+      "similarity_score": 0.9438
     },
     {
       "label": "completely_different_binary_large",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.1047
+      "similarity_score": 0.0
     },
     {
       "label": "cross_tenant_encrypted_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9835
+      "similarity_score": 0.9985
     },
     {
       "label": "cross_tenant_encrypted_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9996
+      "similarity_score": 0.9993
     },
     {
       "label": "cross_tenant_encrypted_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 0.9998
     },
     {
       "label": "cross_tenant_encrypted_binary_large",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 0.9997
     },
     {
       "label": "near_dup_tiny_edit_document_small",
@@ -156,19 +156,19 @@
       "label": "near_dup_moderate_edit_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9945
+      "similarity_score": 0.9833
     },
     {
       "label": "near_dup_appended_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.999
+      "similarity_score": 0.9965
     },
     {
       "label": "near_dup_noise_document_small",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9987
+      "similarity_score": 0.9981
     },
     {
       "label": "near_dup_tiny_edit_document_medium",
@@ -180,19 +180,19 @@
       "label": "near_dup_moderate_edit_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.984
+      "similarity_score": 0.9223
     },
     {
       "label": "near_dup_appended_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9708
+      "similarity_score": 0.9246
     },
     {
       "label": "near_dup_noise_document_medium",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9742
+      "similarity_score": 0.9118
     },
     {
       "label": "near_dup_tiny_edit_image_like",
@@ -204,7 +204,7 @@
       "label": "near_dup_moderate_edit_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9999
+      "similarity_score": 0.9991
     },
     {
       "label": "near_dup_appended_image_like",
@@ -216,7 +216,7 @@
       "label": "near_dup_noise_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.9893
+      "similarity_score": 0.946
     },
     {
       "label": "near_dup_tiny_edit_binary_large",
@@ -228,7 +228,7 @@
       "label": "near_dup_moderate_edit_binary_large",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.997
+      "similarity_score": 0.9966
     },
     {
       "label": "near_dup_appended_binary_large",
@@ -240,31 +240,31 @@
       "label": "near_dup_noise_binary_large",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.8282
+      "similarity_score": 0.7621
     },
     {
       "label": "same_size_different_document_small",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.2024
+      "similarity_score": 0.3681
     },
     {
       "label": "same_size_different_document_medium",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.0806
+      "similarity_score": 0.0
     },
     {
       "label": "same_size_different_image_like",
       "ground_truth": false,
       "predicted": true,
-      "similarity_score": 0.989
+      "similarity_score": 0.945
     },
     {
       "label": "same_size_different_binary_large",
       "ground_truth": false,
       "predicted": false,
-      "similarity_score": 0.1073
+      "similarity_score": 0.0
     },
     {
       "label": "reversed_document_small",
@@ -347,19 +347,19 @@
     {
       "threshold": 0.95,
       "tpr": 1.0,
-      "fpr": 0.7778,
-      "accuracy": 0.3636,
-      "f1_score": 0.3636
+      "fpr": 0.6111,
+      "accuracy": 0.5,
+      "f1_score": 0.4211
     },
     {
       "threshold": 1.0,
-      "tpr": 0.375,
+      "tpr": 0.125,
       "fpr": 0.0833,
-      "accuracy": 0.8182,
-      "f1_score": 0.4286
+      "accuracy": 0.7727,
+      "f1_score": 0.1667
     }
   ],
-  "auc": 0.6997,
+  "auc": 0.6858,
   "baseline_comparison": {
     "random_classifier": {
       "method": "Random Classifier (50/50)",
@@ -385,7 +385,7 @@
   },
   "overall_verdict": {
     "test_result": "FAIL",
-    "auc_score": 0.6997,
-    "best_threshold": 1.0
+    "auc_score": 0.6858,
+    "best_threshold": 0.95
   }
 }

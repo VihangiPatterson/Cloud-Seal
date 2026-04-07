@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-30T00:02:41.432183",
+  "generated_at": "2026-04-08T03:55:29.276510",
   "test_results": {
     "deduplication": [
       {
@@ -127,7 +127,7 @@
         {
           "test": "Block Creation Performance",
           "blocks_created": 100,
-          "avg_creation_time_ms": 0.81,
+          "avg_creation_time_ms": 0.78,
           "status": "PASS"
         },
         {
@@ -147,8 +147,8 @@
           "test": "Transaction Throughput",
           "transactions_attempted": 1000,
           "transactions_accepted": 1000,
-          "time_seconds": 0.01,
-          "throughput_tx_per_sec": 173433.0,
+          "time_seconds": 0.03,
+          "throughput_tx_per_sec": 39505.2,
           "status": "PASS"
         },
         {
