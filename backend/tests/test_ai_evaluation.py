@@ -367,11 +367,11 @@ def baseline_comparison(dataset):
     baselines["hash_exact_match"]["f1_score"] = round(2*p*r/(p+r), 4) if (p+r) > 0 else 0
     
     # Print comparison
-    print(f"\n{'Method':<35} | {'Accuracy':<10} | {'Precision':<10} | {'Recall':<10} | {'F1':<10}")
+    print(f"\n{'Method':<35}  {'Accuracy':<10}  {'Precision':<10}  {'Recall':<10}  {'F1':<10}")
     print("-" * 85)
     for name, metrics in baselines.items():
-        print(f"{metrics['method']:<35} | {metrics['accuracy']:<10} | "
-              f"{metrics['precision']:<10} | {metrics['recall']:<10} | "
+        print(f"{metrics['method']:<35}  {metrics['accuracy']:<10}  "
+              f"{metrics['precision']:<10}  {metrics['recall']:<10}  "
               f"{metrics['f1_score']:<10}")
     
     return baselines
@@ -425,12 +425,12 @@ def test_ai_evaluation():
         "f1_score": metrics["f1_score"]
     }
     
-    print(f"\n{'Method':<35} | {'Accuracy':<10} | {'Precision':<10} | {'Recall':<10} | {'F1':<10}")
+    print(f"\n{'Method':<35}  {'Accuracy':<10}  {'Precision':<10}  {'Recall':<10}  {'F1':<10}")
     print("-" * 85)
     for name, m in baselines.items():
         marker = " ⭐" if name == "siamese_cnn" else ""
-        print(f"{m['method']:<35} | {m['accuracy']:<10} | "
-              f"{m['precision']:<10} | {m['recall']:<10} | "
+        print(f"{m['method']:<35}  {m['accuracy']:<10}  "
+              f"{m['precision']:<10}  {m['recall']:<10}  "
               f"{m['f1_score']:<10}{marker}")
     
     # === Save Results ===
@@ -481,26 +481,26 @@ def test_ai_evaluation():
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     
-    print(f"\n\n✅ AI evaluation results saved to: {output_file}")
+    print(f"\n\n AI evaluation results saved to: {output_file}")
     
     # Print paper-ready summary
     print(f"\n{'=' * 60}")
     print("PAPER-READY SUMMARY")
     print(f"{'=' * 60}\n")
     print(f"TABLE: AI Model Performance (Siamese CNN)")
-    print(f"{'Metric':<30} | {'Value':<15}")
+    print(f"{'Metric':<30}  {'Value':<15}")
     print(f"{'-' * 50}")
-    print(f"{'Architecture':<30} | Siamese CNN")
-    print(f"{'Input Dimension':<30} | 2048")
-    print(f"{'Embedding Dimension':<30} | 128")
-    print(f"{'Training Pairs':<30} | {len(dataset)}")
-    print(f"{'Training Time':<30} | {training_time:.2f}s")
-    print(f"{'Threshold':<30} | 0.85")
-    print(f"{'Accuracy':<30} | {metrics['accuracy']:.4f}")
-    print(f"{'Precision':<30} | {metrics['precision']:.4f}")
-    print(f"{'Recall':<30} | {metrics['recall']:.4f}")
-    print(f"{'F1-Score':<30} | {metrics['f1_score']:.4f}")
-    print(f"{'AUC':<30} | {auc:.4f}")
+    print(f"{'Architecture':<30}  Siamese CNN")
+    print(f"{'Input Dimension':<30}  2048")
+    print(f"{'Embedding Dimension':<30}  128")
+    print(f"{'Training Pairs':<30}  {len(dataset)}")
+    print(f"{'Training Time':<30}  {training_time:.2f}s")
+    print(f"{'Threshold':<30}  0.85")
+    print(f"{'Accuracy':<30}  {metrics['accuracy']:.4f}")
+    print(f"{'Precision':<30}  {metrics['precision']:.4f}")
+    print(f"{'Recall':<30}  {metrics['recall']:.4f}")
+    print(f"{'F1-Score':<30}  {metrics['f1_score']:.4f}")
+    print(f"{'AUC':<30}  {auc:.4f}")
     
     return results
 

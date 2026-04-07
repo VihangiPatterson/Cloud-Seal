@@ -7,7 +7,7 @@ def reset_poc():
     Safely resets the Cloud Seal PoC to a fresh state.
     Wipes all stored files, blockchain logs, metadata, and keys.
     """
-    print("🚀 Starting Cloud Seal PoC System Reset...")
+    print(" Starting Cloud Seal PoC System Reset...")
     
     # Define paths to data directories and files
     backend_dir = Path(__file__).parent
@@ -33,9 +33,9 @@ def reset_poc():
         if file_path.exists():
             try:
                 file_path.unlink()
-                print(f"  ✅ Removed state file: {file_path.name}")
+                print(f"   Removed state file: {file_path.name}")
             except Exception as e:
-                print(f"  ❌ Error removing {file_path.name}: {e}")
+                print(f"   Error removing {file_path.name}: {e}")
 
     # 2. Wipe storage directories
     for dir_path in dirs_to_wipe:
@@ -44,15 +44,15 @@ def reset_poc():
                 # Remove all contents but keep the directory (or recreate it)
                 shutil.rmtree(dir_path)
                 dir_path.mkdir(parents=True, exist_ok=True)
-                print(f"  ✅ Wiped and recreated directory: {dir_path.name}/")
+                print(f"   Wiped and recreated directory: {dir_path.name}/")
             except Exception as e:
-                print(f"  ❌ Error wiping {dir_path.name}/: {e}")
+                print(f"   Error wiping {dir_path.name}/: {e}")
         else:
             dir_path.mkdir(parents=True, exist_ok=True)
-            print(f"  📁 Created missing directory: {dir_path.name}/")
+            print(f"   Created missing directory: {dir_path.name}/")
 
-    print("\n✨ System Reset Complete!")
-    print("👉 IMPORTANT: Please RESTART your Uvicorn server to clear in-memory cache.")
+    print("\n System Reset Complete!")
+    print(" IMPORTANT: Please RESTART your Uvicorn server to clear in-memory cache.")
     print("   Command: Control+C then run 'uvicorn app:app --port 8000'")
 
 if __name__ == "__main__":

@@ -26,10 +26,10 @@ def run_test_script(script_name):
         )
         return result.returncode == 0
     except subprocess.TimeoutExpired:
-        print(f"❌ Test {script_name} timed out")
+        print(f" Test {script_name} timed out")
         return False
     except Exception as e:
-        print(f"❌ Test {script_name} failed with error: {str(e)}")
+        print(f" Test {script_name} failed with error: {str(e)}")
         return False
 
 def generate_final_report():
@@ -65,28 +65,28 @@ def generate_final_report():
     print(f"{'='*70}\n")
     
     if "deduplication" in all_results:
-        print("✅ Deduplication Efficiency Test - COMPLETED")
+        print("Deduplication Efficiency Test - COMPLETED")
         dedup_results = all_results["deduplication"]
         if isinstance(dedup_results, list) and len(dedup_results) > 0:
             avg_reduction = sum(r['storage_reduction_pct'] for r in dedup_results) / len(dedup_results)
             print(f"   Average storage reduction: {avg_reduction:.1f}%")
     
     if "bloom_filter" in all_results:
-        print("✅ Bloom Filter Accuracy Test - COMPLETED")
+        print(" Bloom Filter Accuracy Test - COMPLETED")
         bloom_results = all_results["bloom_filter"]
         if "performance" in bloom_results:
             fp_rate = bloom_results["performance"]["false_positive_rate_pct"]
             print(f"   False positive rate: {fp_rate}%")
     
     if "multitenant" in all_results:
-        print("✅ Multi-Tenant Safety Test - COMPLETED")
+        print(" Multi-Tenant Safety Test - COMPLETED")
         mt_results = all_results["multitenant"]
         if "overall_verdict" in mt_results:
             verdict = mt_results["overall_verdict"]["test_result"]
             print(f"   Test result: {verdict}")
     
     if "blockchain" in all_results:
-        print("✅ Blockchain Integrity Test - COMPLETED")
+        print(" Blockchain Integrity Test - COMPLETED")
         bc_results = all_results["blockchain"]
         if "overall_verdict" in bc_results:
             verdict = bc_results["overall_verdict"]
@@ -100,30 +100,30 @@ def generate_final_report():
     # Table I: Deduplication Efficiency
     if "deduplication" in all_results:
         print("TABLE I: DEDUPLICATION EFFICIENCY ACROSS DATASETS\n")
-        print(f"{'Dataset':<25} | {'Total Files':<12} | {'Unique Files':<12} | {'Storage Reduction':<18} | {'Avg Response':<12}")
+        print(f"{'Dataset':<25}  {'Total Files':<12}  {'Unique Files':<12}  {'Storage Reduction':<18}  {'Avg Response':<12}")
         print(f"{'-'*100}")
         
         for result in all_results["deduplication"]:
-            print(f"{result['scenario']:<25} | {result['total_files']:<12} | {result['unique_files']:<12} | "
-                  f"{result['storage_reduction_pct']}%{'':<15} | {result['avg_response_time_ms']} ms")
+            print(f"{result['scenario']:<25}  {result['total_files']:<12}  {result['unique_files']:<12}  "
+                  f"{result['storage_reduction_pct']}%{'':<15}  {result['avg_response_time_ms']} ms")
     
     # Table II: Bloom Filter
     if "bloom_filter" in all_results:
         print(f"\n\nTABLE II: BLOOM FILTER ACCURACY\n")
         bloom = all_results["bloom_filter"]
-        print(f"{'Metric':<40} | {'Value':<20}")
+        print(f"{'Metric':<40}  {'Value':<20}")
         print(f"{'-'*65}")
         
         config = bloom.get("configuration", {})
         perf = bloom.get("performance", {})
         
-        print(f"{'Bit array size':<40} | {config.get('bit_array_size_bits', 'N/A')} bits ({config.get('bit_array_size_kb', 'N/A')} KB)")
-        print(f"{'Hash functions':<40} | {config.get('hash_functions', 'N/A')} (MurmurHash3)")
-        print(f"{'Files tested':<40} | {perf.get('items_tested', 'N/A')}")
-        print(f"{'True positives':<40} | {perf.get('true_positives', 'N/A')} / {perf.get('items_tested', 'N/A')} ({perf.get('true_positive_rate_pct', 'N/A')}%)")
-        print(f"{'False positives':<40} | {perf.get('false_positives', 'N/A')} / {perf.get('items_tested', 'N/A')} ({perf.get('false_positive_rate_pct', 'N/A')}%)")
-        print(f"{'Query time (avg)':<40} | {perf.get('avg_query_time_ms', 'N/A')} ms")
-        print(f"{'Memory efficiency':<40} | {perf.get('bytes_per_item', 'N/A')} bytes per file")
+        print(f"{'Bit array size':<40}  {config.get('bit_array_size_bits', 'N/A')} bits ({config.get('bit_array_size_kb', 'N/A')} KB)")
+        print(f"{'Hash functions':<40}  {config.get('hash_functions', 'N/A')} (MurmurHash3)")
+        print(f"{'Files tested':<40}  {perf.get('items_tested', 'N/A')}")
+        print(f"{'True positives':<40}  {perf.get('true_positives', 'N/A')} / {perf.get('items_tested', 'N/A')} ({perf.get('true_positive_rate_pct', 'N/A')}%)")
+        print(f"{'False positives':<40}  {perf.get('false_positives', 'N/A')} / {perf.get('items_tested', 'N/A')} ({perf.get('false_positive_rate_pct', 'N/A')}%)")
+        print(f"{'Query time (avg)':<40}  {perf.get('avg_query_time_ms', 'N/A')} ms")
+        print(f"{'Memory efficiency':<40}  {perf.get('bytes_per_item', 'N/A')} bytes per file")
     
     # Save comprehensive report
     comprehensive_report = {
@@ -143,7 +143,7 @@ def generate_final_report():
     with open(output_file, 'w') as f:
         json.dump(comprehensive_report, f, indent=2)
     
-    print(f"\n\n✅ Comprehensive report saved to: {output_file}")
+    print(f"\n\n Comprehensive report saved to: {output_file}")
 
 def main():
     """Main test execution"""
@@ -175,7 +175,7 @@ def main():
     for script in test_scripts:
         script_path = Path(script)
         if not script_path.exists():
-            print(f"⚠️  Test script not found: {script}")
+            print(f"  Test script not found: {script}")
             results[script] = False
             continue
         
@@ -183,9 +183,9 @@ def main():
         results[script] = success
         
         if success:
-            print(f"\n✅ {script} completed successfully")
+            print(f"\n {script} completed successfully")
         else:
-            print(f"\n❌ {script} failed")
+            print(f"\n {script} failed")
         
         time.sleep(2)  # Pause between tests
     
@@ -207,9 +207,9 @@ def main():
     print(f"Success rate:        {(passed_tests / total_tests * 100):.1f}%")
     
     if passed_tests == total_tests:
-        print(f"\n🎉 ALL TESTS PASSED! Your PoC is validated!")
+        print(f"\n ALL TESTS PASSED! Your PoC is validated!")
     else:
-        print(f"\n⚠️  Some tests failed. Review the logs above.")
+        print(f"\n️  Some tests failed. Review the logs above.")
     
     print(f"\nEnd time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 

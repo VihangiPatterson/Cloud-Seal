@@ -65,9 +65,9 @@ def test_multitenant_safety():
             
             print(f"  CID:           {data['cid'][:16]}...")
             print(f"  Status:        {actual_status} (Expected: {expected_status}) "
-                  f"{'✅' if status_match else '❌'}")
+                  f"{'' if status_match else ''}")
             print(f"  Deduplicated:  {actual_dedup} (Expected: {expected_dedup}) "
-                  f"{'✅' if dedup_match else '❌'}")
+                  f"{'' if dedup_match else ''}")
             
             # Check reference count
             files_response = requests.get(f"{API}/files")
@@ -81,7 +81,7 @@ def test_multitenant_safety():
                     expected_ref_count = i + 1
                     
                     print(f"  Ref Count:     {ref_count} (Expected: {expected_ref_count}) "
-                          f"{'✅' if ref_count == expected_ref_count else '❌'}")
+                          f"{'' if ref_count == expected_ref_count else ''}")
                     print(f"  Owners:        {', '.join(owners)}")
             
             results["phases"].append({
@@ -121,15 +121,15 @@ def test_multitenant_safety():
             deleted_match = deleted_from_storage == expected_deleted
             
             print(f"  Remaining Refs: {remaining_refs} (Expected: {expected_remaining}) "
-                  f"{'✅' if remaining_match else '❌'}")
+                  f"{'' if remaining_match else ''}")
             print(f"  Physically Deleted: {deleted_from_storage} (Expected: {expected_deleted}) "
-                  f"{'✅' if deleted_match else '❌'}")
+                  f"{'' if deleted_match else ''}")
             
             # Critical test: Verify file still exists (or not) in storage
             if not expected_deleted:
-                print(f"  File Status:    Still in storage (other tenants using) ✅")
+                print(f"  File Status:    Still in storage (other tenants using) ")
             else:
-                print(f"  File Status:    Removed from storage (last owner deleted) ✅")
+                print(f"  File Status:    Removed from storage (last owner deleted) ")
             
             results["phases"].append({
                 "phase": f"Delete_{tenant}",
@@ -153,7 +153,7 @@ def test_multitenant_safety():
         
         print(f"File still in system: {file_still_exists}")
         print(f"Expected: False (should be deleted)")
-        print(f"Status: {'✅ PASS' if not file_still_exists else '❌ FAIL'}")
+        print(f"Status: {' PASS' if not file_still_exists else ' FAIL'}")
         
         results["final_verification"] = {
             "file_exists_in_system": file_still_exists,
@@ -170,7 +170,7 @@ def test_multitenant_safety():
     print(f"{'='*60}")
     print(f"All phase tests passed:      {all_passed}")
     print(f"Final verification passed:   {final_passed}")
-    print(f"Multi-tenant safety:         {'✅ PASS' if all_passed and final_passed else '❌ FAIL'}")
+    print(f"Multi-tenant safety:         {' PASS' if all_passed and final_passed else ' FAIL'}")
     
     results["overall_verdict"] = {
         "all_phases_passed": all_passed,
@@ -183,28 +183,28 @@ def test_multitenant_safety():
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     
-    print(f"\n✅ Results saved to: {output_file}")
+    print(f"\n Results saved to: {output_file}")
     
     # Print summary table for paper
     print(f"\n{'='*60}")
     print("TABLE: MULTI-TENANT SAFETY TEST (for paper)")
     print(f"{'='*60}")
-    print(f"{'Action':<25} | {'Tenant':<10} | {'Ref Count':<10} | {'Physically Deleted':<15} | {'Result':<6}")
+    print(f"{'Action':<25}  {'Tenant':<10}  {'Ref Count':<10}  {'Physically Deleted':<15}  {'Result':<6}")
     print(f"{'-'*80}")
-    print(f"{'Upload (first)':<25} | {'Tenant_A':<10} | {'1':<10} | {'No':<15} | {'✅':<6}")
-    print(f"{'Upload (duplicate)':<25} | {'Tenant_B':<10} | {'2':<10} | {'No':<15} | {'✅':<6}")
-    print(f"{'Upload (duplicate)':<25} | {'Tenant_C':<10} | {'3':<10} | {'No':<15} | {'✅':<6}")
-    print(f"{'Delete':<25} | {'Tenant_A':<10} | {'2':<10} | {'No':<15} | {'✅':<6}")
-    print(f"{'Delete':<25} | {'Tenant_B':<10} | {'1':<10} | {'No':<15} | {'✅':<6}")
-    print(f"{'Delete (last owner)':<25} | {'Tenant_C':<10} | {'0':<10} | {'Yes':<15} | {'✅':<6}")
+    print(f"{'Upload (first)':<25}  {'Tenant_A':<10}  {'1':<10}  {'No':<15}  {'':<6}")
+    print(f"{'Upload (duplicate)':<25}  {'Tenant_B':<10}  {'2':<10}  {'No':<15}  {'':<6}")
+    print(f"{'Upload (duplicate)':<25}  {'Tenant_C':<10}  {'3':<10}  {'No':<15}  {'':<6}")
+    print(f"{'Delete':<25}  {'Tenant_A':<10}  {'2':<10}  {'No':<15}  {'':<6}")
+    print(f"{'Delete':<25}  {'Tenant_B':<10}  {'1':<10}  {'No':<15}  {'':<6}")
+    print(f"{'Delete (last owner)':<25}  {'Tenant_C':<10}  {'0':<10}  {'Yes':<15}  {'':<6}")
     
     return results
 
 if __name__ == "__main__":
     try:
         results = test_multitenant_safety()
-        print("\n✅ Test completed successfully!")
+        print("\n Test completed successfully!")
     except Exception as e:
-        print(f"\n❌ Test failed: {str(e)}")
+        print(f"\n Test failed: {str(e)}")
         import traceback
         traceback.print_exc()

@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class Blockchain:
-    def __init__(self, storage_file: Path | None = None):
+    def __init__(self, storage_file: Path  None = None):
         self.chain = []
         self.pending_transactions = []
         self.storage_file = storage_file

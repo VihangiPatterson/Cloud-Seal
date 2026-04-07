@@ -54,7 +54,7 @@ def benchmark_encryption():
     
     results = []
     
-    print(f"\n{'File Size':<12} | {'Encrypt (ms)':<14} | {'Decrypt (ms)':<14} | {'Key Gen (ms)':<14} | {'Hash (ms)':<12}")
+    print(f"\n{'File Size':<12}  {'Encrypt (ms)':<14}  {'Decrypt (ms)':<14}  {'Key Gen (ms)':<14}  {'Hash (ms)':<12}")
     print("-" * 75)
     
     for size_label, size_bytes in file_sizes.items():
@@ -95,8 +95,8 @@ def benchmark_encryption():
         }
         results.append(result)
         
-        print(f"{size_label:<12} | {enc_timing['avg_ms']:<14.3f} | {dec_timing['avg_ms']:<14.3f} | "
-              f"{key_timing['avg_ms']:<14.3f} | {hash_timing['avg_ms']:<12.3f}")
+        print(f"{size_label:<12}  {enc_timing['avg_ms']:<14.3f}  {dec_timing['avg_ms']:<14.3f}  "
+              f"{key_timing['avg_ms']:<14.3f}  {hash_timing['avg_ms']:<12.3f}")
     
     return results
 
@@ -124,7 +124,7 @@ def benchmark_pqc_encryption():
     
     results = []
     
-    print(f"\n{'File Size':<12} | {'Classical (ms)':<16} | {'PQC Hybrid (ms)':<16} | {'PQC Overhead':<14}")
+    print(f"\n{'File Size':<12}  {'Classical (ms)':<16}  {'PQC Hybrid (ms)':<16}  {'PQC Overhead':<14}")
     print("-" * 65)
     
     for size_label, size_bytes in file_sizes.items():
@@ -158,8 +158,8 @@ def benchmark_pqc_encryption():
         }
         results.append(result)
         
-        print(f"{size_label:<12} | {classical_timing['avg_ms']:<16.3f} | "
-              f"{pqc_timing['avg_ms']:<16.3f} | {overhead:<14}")
+        print(f"{size_label:<12}  {classical_timing['avg_ms']:<16.3f}  "
+              f"{pqc_timing['avg_ms']:<16.3f}  {overhead:<14}")
     
     return results
 
@@ -173,7 +173,7 @@ def benchmark_bloom_filter():
     scales = [100, 1000, 5000, 10000]
     results = []
     
-    print(f"\n{'Items':<10} | {'Add (ms/op)':<14} | {'Query (ms/op)':<14} | {'Memory (KB)':<12} | {'FP Rate':<10}")
+    print(f"\n{'Items':<10}  {'Add (ms/op)':<14}  {'Query (ms/op)':<14}  {'Memory (KB)':<12}  {'FP Rate':<10}")
     print("-" * 70)
     
     for num_items in scales:
@@ -218,8 +218,8 @@ def benchmark_bloom_filter():
         }
         results.append(result)
         
-        print(f"{num_items:<10} | {add_per_op:<14.6f} | {query_per_op:<14.6f} | "
-              f"{memory_kb:<12.2f} | {fp_rate:<10.4f}")
+        print(f"{num_items:<10}  {add_per_op:<14.6f}  {query_per_op:<14.6f}  "
+              f"{memory_kb:<12.2f}  {fp_rate:<10.4f}")
     
     return results
 
@@ -301,15 +301,15 @@ def benchmark_blockchain():
         "retrieval_time_ms": round(audit_time, 3)
     }
     
-    print(f"\n{'Operation':<30} | {'Time (ms)':<12} | {'Details':<30}")
+    print(f"\n{'Operation':<30}  {'Time (ms)':<12}  {'Details':<30}")
     print("-" * 75)
-    print(f"{'Add Transaction':<30} | {results['transaction_addition']['per_transaction_ms']:<12.3f} | "
+    print(f"{'Add Transaction':<30}  {results['transaction_addition']['per_transaction_ms']:<12.3f}  "
           f"Per transaction ({num_transactions} total)")
-    print(f"{'Mine Block':<30} | {results['block_mining']['mining_time_ms']:<12.3f} | "
+    print(f"{'Mine Block':<30}  {results['block_mining']['mining_time_ms']:<12.3f}  "
           f"{num_transactions} transactions")
-    print(f"{'Validate Chain':<30} | {results['chain_validation']['validation_time_ms']:<12.3f} | "
+    print(f"{'Validate Chain':<30}  {results['chain_validation']['validation_time_ms']:<12.3f}  "
           f"{chain_length} blocks, valid={is_valid}")
-    print(f"{'Retrieve Audit Log':<30} | {results['audit_retrieval']['retrieval_time_ms']:<12.3f} | "
+    print(f"{'Retrieve Audit Log':<30}  {results['audit_retrieval']['retrieval_time_ms']:<12.3f}  "
           f"{len(audit)} entries")
     
     return results
@@ -369,7 +369,7 @@ def benchmark_memory_usage():
         "model_parameters": "2048×128 weights + 128 bias = 262,272"
     }
     
-    print(f"\n{'Component':<25} | {'Current (MB)':<14} | {'Peak (MB)':<14} | {'Details':<30}")
+    print(f"\n{'Component':<25}  {'Current (MB)':<14}  {'Peak (MB)':<14}  {'Details':<30}")
     print("-" * 90)
     for name, mem in results.items():
         details = ""
@@ -380,7 +380,7 @@ def benchmark_memory_usage():
         elif name == "ai_engine":
             details = f"{mem['files_encoded']} files encoded"
         
-        print(f"{name:<25} | {mem['current_mb']:<14.3f} | {mem['peak_mb']:<14.3f} | {details}")
+        print(f"{name:<25}  {mem['current_mb']:<14.3f}  {mem['peak_mb']:<14.3f}  {details}")
     
     return results
 
@@ -403,8 +403,8 @@ def benchmark_end_to_end():
     bloom = BloomFilter(expected_items=10000, false_positive_rate=0.01)
     blockchain = DistributedBlockchain(node_id="main_node", authorized_validators=["main_node"])
     
-    print(f"\n{'File Size':<12} | {'Hash (ms)':<12} | {'Bloom (ms)':<12} | {'Encrypt (ms)':<14} | "
-          f"{'Blockchain (ms)':<16} | {'Total (ms)':<12}")
+    print(f"\n{'File Size':<12}  {'Hash (ms)':<12}  {'Bloom (ms)':<12}  {'Encrypt (ms)':<14}  "
+          f"{'Blockchain (ms)':<16}  {'Total (ms)':<12}")
     print("-" * 85)
     
     for size_label, size_bytes in file_sizes.items():
@@ -454,8 +454,8 @@ def benchmark_end_to_end():
         }
         results.append(result)
         
-        print(f"{size_label:<12} | {hash_time:<12.3f} | {bloom_time:<12.3f} | "
-              f"{encrypt_time:<14.3f} | {blockchain_time:<16.3f} | {total:<12.3f}")
+        print(f"{size_label:<12}  {hash_time:<12.3f}  {bloom_time:<12.3f}  "
+              f"{encrypt_time:<14.3f}  {blockchain_time:<16.3f}  {total:<12.3f}")
     
     return results
 
@@ -483,7 +483,7 @@ def test_performance_benchmarks():
     with open(output_file, 'w') as f:
         json.dump(all_results, f, indent=2)
     
-    print(f"\n\n✅ Performance benchmark results saved to: {output_file}")
+    print(f"\n\n Performance benchmark results saved to: {output_file}")
     
     # Overall verdict
     print(f"\n{'=' * 60}")
@@ -493,11 +493,11 @@ def test_performance_benchmarks():
     # Check NFR compliance
     pipeline = all_results["end_to_end_pipeline"]
     all_within_5s = all(r["meets_5s_requirement"] for r in pipeline)
-    print(f"\n  NFR-01 (Upload < 5s for ≤100MB): {'✅ PASS' if all_within_5s else '❌ FAIL'}")
+    print(f"\n  NFR-01 (Upload < 5s for ≤100MB): {' PASS' if all_within_5s else ' FAIL'}")
     
     bloom = all_results["bloom_filter_throughput"]
     bloom_fast = all(r["query_per_op_ms"] < 1 for r in bloom)
-    print(f"  NFR-02 (Dedup detection < 2s):    {'✅ PASS' if bloom_fast else '❌ FAIL'}")
+    print(f"  NFR-02 (Dedup detection < 2s):    {' PASS' if bloom_fast else ' FAIL'}")
     
     all_results["overall_verdict"] = {
         "nfr_01_upload_performance": "PASS" if all_within_5s else "FAIL",

@@ -58,7 +58,7 @@ def test_confirmation_attack_resistance():
     results["tests"].append({
         "test": "Different tenants produce different encryption keys",
         "passed": keys_different,
-        "detail": f"Attacker key: {attacker_key.hex()[:16]}... | Victim key: {victim_key.hex()[:16]}..."
+        "detail": f"Attacker key: {attacker_key.hex()[:16]}...  Victim key: {victim_key.hex()[:16]}..."
     })
     print(f"   Keys differ for same file, different tenants: {keys_different}")
     
@@ -76,7 +76,7 @@ def test_confirmation_attack_resistance():
     results["tests"].append({
         "test": "Ciphertext hashes differ across tenants",
         "passed": hashes_different,
-        "detail": f"Attacker hash: {attacker_hash[:16]}... | Victim hash: {victim_hash[:16]}..."
+        "detail": f"Attacker hash: {attacker_hash[:16]}...  Victim hash: {victim_hash[:16]}..."
     })
     print(f"   Ciphertext hashes differ: {hashes_different}")
     
@@ -102,7 +102,7 @@ def test_confirmation_attack_resistance():
     
     all_passed = all(t["passed"] for t in results["tests"])
     results["verdict"] = "SECURE" if all_passed else "VULNERABLE"
-    print(f"\n  Verdict: {'SECURE' if all_passed else '❌ VULNERABLE'} — "
+    print(f"\n  Verdict: {'SECURE' if all_passed else ' VULNERABLE'} — "
           f"Confirmation attacks blocked by tenant-specific salting")
     
     return results
@@ -165,7 +165,7 @@ def test_cross_tenant_isolation():
     results["tests"].append({
         "test": "Encryption keys are tenant-specific",
         "passed": keys_different,
-        "detail": f"Key A: {key_a.hex()[:16]}... | Key B: {key_b.hex()[:16]}..."
+        "detail": f"Key A: {key_a.hex()[:16]}...  Key B: {key_b.hex()[:16]}..."
     })
     print(f"   Keys are tenant-specific: {keys_different}")
     
@@ -196,7 +196,7 @@ def test_cross_tenant_isolation():
     
     all_passed = all(t["passed"] for t in results["tests"])
     results["verdict"] = "ISOLATED" if all_passed else "LEAKING"
-    print(f"\n  Verdict: {'✅ ISOLATED' if all_passed else '❌ LEAKING'} — "
+    print(f"\n  Verdict: {' ISOLATED' if all_passed else ' LEAKING'} — "
           f"Complete cryptographic isolation between tenants")
     
     return results
@@ -295,7 +295,7 @@ def test_blockchain_tamper_detection():
     
     all_passed = all(t["passed"] for t in results["tests"])
     results["verdict"] = "TAMPER-PROOF" if all_passed else "VULNERABLE"
-    print(f"\n  Verdict: {' TAMPER-PROOF' if all_passed else '❌ VULNERABLE'} — "
+    print(f"\n  Verdict: {' TAMPER-PROOF' if all_passed else ' VULNERABLE'} — "
           f"All modifications instantly detected")
     
     return results
@@ -371,7 +371,7 @@ def test_bloom_filter_security():
     
     all_passed = all(t["passed"] for t in results["tests"])
     results["verdict"] = "BOUNDED" if all_passed else "UNBOUNDED"
-    print(f"\n  Verdict: {'BOUNDED' if all_passed else '❌ UNBOUNDED'} — "
+    print(f"\n  Verdict: {'BOUNDED' if all_passed else ' UNBOUNDED'} — "
           f"FP rate within mathematical bounds, no data loss possible")
     
     return results
@@ -459,7 +459,7 @@ def test_key_derivation_security():
     
     all_passed = all(t["passed"] for t in results["tests"])
     results["verdict"] = "SECURE" if all_passed else "WEAK"
-    print(f"\n  Verdict: {' SECURE' if all_passed else '❌ WEAK'} — "
+    print(f"\n  Verdict: {' SECURE' if all_passed else ' WEAK'} — "
           f"SHA-256 key derivation provides 256-bit security with proper avalanche effect")
     
     return results
@@ -513,7 +513,7 @@ def test_security_threat_model():
     print("THREAT MODEL SUMMARY")
     print(f"{'=' * 60}\n")
     
-    print(f"{'Threat':<35} | {'Mitigation':<30} | {'Verdict':<15}")
+    print(f"{'Threat':<35}  {'Mitigation':<30}  {'Verdict':<15}")
     print("-" * 85)
     
     threat_summaries = {
@@ -526,10 +526,10 @@ def test_security_threat_model():
     
     for name, (mitigation, key) in threat_summaries.items():
         verdict = threat_model["results"][key]["verdict"]
-        icon = "" if verdict in ("SECURE", "ISOLATED", "TAMPER-PROOF", "BOUNDED") else "❌"
-        print(f"{name:<35} | {mitigation:<30} | {icon} {verdict}")
+        icon = "" if verdict in ("SECURE", "ISOLATED", "TAMPER-PROOF", "BOUNDED") else ""
+        print(f"{name:<35}  {mitigation:<30}  {icon} {verdict}")
     
-    print(f"\n  Overall: {' ALL THREATS MITIGATED' if all_secure else '❌ SOME THREATS UNMITIGATED'}")
+    print(f"\n  Overall: {' ALL THREATS MITIGATED' if all_secure else ' SOME THREATS UNMITIGATED'}")
     
     return threat_model
 

@@ -30,7 +30,7 @@ except (OSError, PermissionError):
     # Use /tmp as it is always writable in Choreo/Serverless environments
     DATA_DIR = Path('/tmp/cloud-seal-data')
     DATA_DIR.mkdir(exist_ok=True, parents=True)
-    print(f"[Config] ☁️ Read-only detected. Switching storage to: {DATA_DIR}")
+    print(f"[Config] ️ Read-only detected. Switching storage to: {DATA_DIR}")
 
 # Blockchain Configuration
 BLOCKCHAIN_FILE = DATA_DIR / 'blockchain.json'

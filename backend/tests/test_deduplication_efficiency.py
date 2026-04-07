@@ -134,7 +134,7 @@ def test_deduplication_efficiency():
         
         # Accuracy check
         accuracy = (unique_stored == expected_unique and duplicate_detected == expected_duplicates)
-        print(f"Accuracy:              {'✅ PASS' if accuracy else '❌ FAIL'}")
+        print(f"Accuracy:              {' PASS' if accuracy else ' FAIL'}")
         
         results.append({
             "scenario": scenario['name'],
@@ -163,15 +163,15 @@ def test_deduplication_efficiency():
     with open(output_file, 'w') as f:
         json.dump(results, f, indent=2)
     
-    print(f"\n✅ Results saved to: {output_file}")
+    print(f"\n Results saved to: {output_file}")
     
     return results
 
 if __name__ == "__main__":
     try:
         results = test_deduplication_efficiency()
-        print("\n✅ Test completed successfully!")
+        print("\n Test completed successfully!")
     except Exception as e:
-        print(f"\n❌ Test failed: {str(e)}")
+        print(f"\n Test failed: {str(e)}")
         import traceback
         traceback.print_exc()

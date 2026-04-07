@@ -139,15 +139,15 @@ def test_bloom_filter_accuracy():
     print(f"\n{'='*60}")
     print("TABLE II: BLOOM FILTER ACCURACY (for paper)")
     print(f"{'='*60}")
-    print(f"Metric                           | Value")
+    print(f"Metric                            Value")
     print(f"{'-'*60}")
-    print(f"Bit array size                   | {bloom.size} bits ({bloom.size / 8192:.1f} KB)")
-    print(f"Hash functions                   | {bloom.hash_count} (MurmurHash3)")
-    print(f"Files tested                     | {len(known_items)}")
-    print(f"True positives                   | {true_positives} / {len(known_items)} (100%)")
-    print(f"False positives                  | {false_positives} / {len(unknown_items)} ({fp_rate:.1f}%)")
-    print(f"Query time (avg)                 | {avg_query_time:.2f} ms")
-    print(f"Memory efficiency                | {bytes_per_item:.1f} bytes per file")
+    print(f"Bit array size                    {bloom.size} bits ({bloom.size / 8192:.1f} KB)")
+    print(f"Hash functions                    {bloom.hash_count} (MurmurHash3)")
+    print(f"Files tested                      {len(known_items)}")
+    print(f"True positives                    {true_positives} / {len(known_items)} (100%)")
+    print(f"False positives                   {false_positives} / {len(unknown_items)} ({fp_rate:.1f}%)")
+    print(f"Query time (avg)                  {avg_query_time:.2f} ms")
+    print(f"Memory efficiency                 {bytes_per_item:.1f} bytes per file")
     
     return results
 

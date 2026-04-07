@@ -39,7 +39,7 @@ class BinaryFileEncoder:
         # 2. Byte pair frequencies (sample 256 most common pairs)
         pairs = []
         for i in range(0, len(file_content) - 1, 2):
-            pair_val = (file_content[i] << 8) | file_content[i + 1]
+            pair_val = (file_content[i] << 8)  file_content[i + 1]
             pairs.append(pair_val)
         pair_counts = np.bincount(pairs, minlength=65536)
         top_pairs = np.argsort(pair_counts)[-256:]
@@ -239,7 +239,7 @@ class SimpleCNN:
                 num_updates += 1
                 
                 # Gradient of cos_sim w.r.t. z2 (pre-normalization)
-                # cos_sim = (z2_1/||z2_1||) · (z2_2/||z2_2||)
+                # cos_sim = (z2_1/z2_1) · (z2_2/z2_2)
                 # d(cos_sim)/d(z2_1) = (emb2 - cos_sim * emb1) / norm1
                 d_z2_1 = d_cos * (emb2 - cos_sim * emb1) / max(norm1, 1e-8)
                 d_z2_2 = d_cos * (emb1 - cos_sim * emb2) / max(norm2, 1e-8)
@@ -440,4 +440,4 @@ if __name__ == "__main__":
     model_path.parent.mkdir(exist_ok=True)
     engine.save_model(model_path)
     
-    print("\n✅ AI deduplication module ready!")
+    print("\n AI deduplication module ready!")

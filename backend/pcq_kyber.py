@@ -307,7 +307,7 @@ if __name__ == "__main__":
         metadata["content_hash"], "tenant_A", "tenant_B"
     )
     
-    print("\n✅ Post-quantum cryptography module ready!")
+    print("\n Post-quantum cryptography module ready!")
     print("\nKey sizes (Kyber-768):")
     print(f"  Public key:  {len(pk_a)} bytes")
     print(f"  Ciphertext:  {len(ciphertext)} bytes")

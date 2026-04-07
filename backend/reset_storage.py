@@ -13,9 +13,9 @@ def reset_storage():
         try:
             # Remove the whole data directory
             shutil.rmtree(data_dir)
-            print("✅ Data directory removed.")
+            print(" Data directory removed.")
         except Exception as e:
-            print(f"❌ Error removing data directory: {e}")
+            print(f" Error removing data directory: {e}")
             return False
     
     # Re-create the necessary structure
@@ -23,11 +23,11 @@ def reset_storage():
         data_dir.mkdir(exist_ok=True)
         (data_dir / 'ipfs').mkdir(exist_ok=True)
         (data_dir / 'pqc_keys').mkdir(exist_ok=True)
-        print("✅ Directory structure re-created.")
-        print("🚀 Storage is now clean and ready for fresh testing!")
+        print(" Directory structure re-created.")
+        print(" Storage is now clean and ready for fresh testing!")
         return True
     except Exception as e:
-        print(f"❌ Error re-creating directories: {e}")
+        print(f" Error re-creating directories: {e}")
         return False
 
 if __name__ == "__main__":

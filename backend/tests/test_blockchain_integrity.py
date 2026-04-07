@@ -84,7 +84,7 @@ def test_blockchain_integrity():
     print(f"Chain length:     {len(blockchain.chain)} blocks")
     print(f"Chain valid:      {is_valid}")
     print(f"Validation time:  {validation_time:.2f} ms")
-    print(f"Status:           {'✅ PASS' if is_valid else '❌ FAIL'}")
+    print(f"Status:           {' PASS' if is_valid else ' FAIL'}")
     
     results["tests"].append({
         "test": "Chain Validation",
@@ -116,7 +116,7 @@ def test_blockchain_integrity():
         
         print(f"Chain valid after tampering: {is_valid_after_tamper}")
         print(f"Tamper detected: {not is_valid_after_tamper}")
-        print(f"Status: {'✅ PASS' if not is_valid_after_tamper else '❌ FAIL'}")
+        print(f"Status: {' PASS' if not is_valid_after_tamper else ' FAIL'}")
         
         # Restore original
         blockchain.load_from_file()
@@ -225,14 +225,14 @@ def test_blockchain_integrity():
     print(f"\n{'='*60}")
     print("TABLE IV: BLOCKCHAIN AUDIT TRAIL METRICS (for paper)")
     print(f"{'='*60}")
-    print(f"Metric                           | Value")
+    print(f"Metric                            Value")
     print(f"{'-'*60}")
-    print(f"Consensus mechanism              | Proof-of-Authority")
-    print(f"Block creation time (avg)        | {avg_creation_time:.0f} ms")
-    print(f"Chain validation time            | {validation_time:.0f} ms ({len(blockchain.chain)} blocks)")
-    print(f"Transaction throughput           | {throughput:.0f} tx/sec")
-    print(f"Storage overhead                 | {bytes_per_block:.1f} bytes per block")
-    print(f"Tamper detection                 | 100% (hash chain validation)")
+    print(f"Consensus mechanism               Proof-of-Authority")
+    print(f"Block creation time (avg)         {avg_creation_time:.0f} ms")
+    print(f"Chain validation time             {validation_time:.0f} ms ({len(blockchain.chain)} blocks)")
+    print(f"Transaction throughput            {throughput:.0f} tx/sec")
+    print(f"Storage overhead                  {bytes_per_block:.1f} bytes per block")
+    print(f"Tamper detection                  100% (hash chain validation)")
     
     return results
 
