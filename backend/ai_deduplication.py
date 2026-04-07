@@ -3,6 +3,7 @@ AI-Driven Encrypted Duplicate Detection
 Uses CNN for binary file similarity analysis without decryption
 """
 
+# AI USAGE DECLARATION: Minor usage of AI (Claude) for code refinements and error checks.
 import numpy as np
 import hashlib
 from typing import List, Tuple, Optional

@@ -1,5 +1,8 @@
 """
 Master Test Runner - Runs all tests and generates final report
+
+AI USAGE DECLARATION:
+Minor usage of AI (Claude) for code refinements and error checks.
 """
 import subprocess
 import sys

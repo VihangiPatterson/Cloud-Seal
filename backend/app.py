@@ -1,5 +1,10 @@
 """
 Cloud Seal PoC - FastAPI Backend
+
+AI USAGE DECLARATION:
+In accordance with SLEP/LESP guidelines, the author declares 
+the minor usage of AI (Claude) for code refinements and error 
+checks during the development of this module.
 """
 from fastapi import FastAPI, UploadFile, File, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware

@@ -2,6 +2,7 @@
 AES-256 Encryption with Convergent Encryption
 """
 import hashlib
+# AI USAGE DECLARATION: Minor usage of AI (Claude) for code refinements and error checks.
 import os
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
